@@ -8,7 +8,7 @@ class App extends React.Component {
       username: '',
       cartOptions: [],
       cart: '',
-      challengeSets: {/*name, {set}*/},
+      challengeSets: {/*name, [set]*/},
       selectedChallengeSet: {},
     }
   }
@@ -23,7 +23,7 @@ class App extends React.Component {
       <h1>Item List</h1>
       {/*
       Maybe <WelcomeModal />
-      Maybe <LeaderBoardModal />
+      Maybe <endGameModal />
       <Game />
       */}
     </div>)
