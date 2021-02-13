@@ -1,34 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import $ from 'jquery';
-import List from './components/List.jsx';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { 
-      items: []
+    this.state = {
+      username: '',
+      cartOptions: [],
+      cart: '',
+      challengeSets: {/*name, {set}*/},
+      selectedChallengeSet: {},
     }
   }
 
   componentDidMount() {
-    $.ajax({
-      url: '/items', 
-      success: (data) => {
-        this.setState({
-          items: data
-        })
-      },
-      error: (err) => {
-        console.log('err', err);
-      }
-    });
+    //get username via alert
+    //get users highscore and use it to determine cart options
   }
 
   render () {
     return (<div>
       <h1>Item List</h1>
-      <List items={this.state.items}/>
+      {/*
+      Maybe <WelcomeModal />
+      Maybe <LeaderBoardModal />
+      <Game />
+      */}
     </div>)
   }
 }
