@@ -4,13 +4,13 @@ import styled from 'styled-components';
 
 const ScoreWrapper = styled.div`
   display: block;
-  width: 40%;
+  position: absolute;
+  top: 10px;
+  width: 100%;
   height: 50px;
   margin: 15px auto;
   text-align: center;
   font-size: 32px;
-  border: 1px solid black;
-
 `;
 const ScoreDisplay = (props) => {
   return (
