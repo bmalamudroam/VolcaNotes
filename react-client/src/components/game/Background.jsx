@@ -3,18 +3,15 @@ import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 
 const BackgroundWrapper = styled.div`
+  display: flex;
   height: 100%;
-  width: 100%;
-  overflow: scroll;
+  flex-direction: column;
+  overflow-y: scroll;
+  object-fit: cover;
 `;
 
-const BackgroundImage = styled.img`
-  display: block;
-  position: relative;
-  height: 100%;
-  width: 100%;
-  overflow: scroll;
-`;
+// const img = styled.img`
+// `;
 
 class Background extends React.Component {
   constructor(props) {
@@ -26,10 +23,10 @@ class Background extends React.Component {
   render () {
     return (
       <BackgroundWrapper>
-        <BackgroundImage src="http://localhost:3000/images/game-background.svg"/>
-        <BackgroundImage src="http://localhost:3000/images/game-background.svg"/>
-        <BackgroundImage src="http://localhost:3000/images/game-background.svg"/>
-        <BackgroundImage src="http://localhost:3000/images/game-background.svg"/>
+        <img src="http://localhost:3000/images/game-background.svg"/>
+        <img src="http://localhost:3000/images/game-background.svg"/>
+        <img src="http://localhost:3000/images/game-background.svg"/>
+        <img src="http://localhost:3000/images/game-background.svg"/>
       </BackgroundWrapper>
     )
   }
