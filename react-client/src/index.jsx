@@ -1,6 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Game from './components/game/Game.jsx';
+import styled from 'styled-components';
 
+const AppWrapper = styled.div`
+  font-family: 'Press Start 2P', cursive;
+`;
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -19,14 +24,15 @@ class App extends React.Component {
   }
 
   render () {
-    return (<div>
-      <h1>Item List</h1>
-      {/*
-      Maybe <WelcomeModal />
-      Maybe <endGameModal />
-      <Game />
-      */}
-    </div>)
+    return (
+      <AppWrapper>
+        <Game />
+        {/*
+        Maybe <WelcomeModal />
+        Maybe <endGameModal />
+
+        */}
+      </AppWrapper>)
   }
 }
 

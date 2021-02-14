@@ -1,5 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import styled from 'styled-components';
+
+import ScoreDisplay from './ScoreDisplay.jsx';
+
+const GameWrapper = styled.div`
+  width: 70%;
+  height: 90%;
+  margin: auto;
+  border: 1px solid black;
+`;
 
 class Game extends React.Component {
   constructor(props) {
@@ -29,6 +39,7 @@ class Game extends React.Component {
   handleGuessSubmit (event) {
     event.preventDefault();
     //check if its right
+     //this could be a method that handles success
       //if so, update current platform
       //figure out how to move between platforms
       //update currentScore
@@ -41,11 +52,27 @@ class Game extends React.Component {
 
   render () {
     return (
-      <div>
+      <GameWrapper>
+        <ScoreDisplay />
         This is the game map
-      </div>
+      </GameWrapper>
+      /*
+      <GameWrapper>
+
+        <Map translation={currentTranslation}>
+          <Background currentPlatform={currentPlatform}/>
+          <Player platform={platform} cart={cart}/>
+        </Map>
+        <Lava
+      </GameWrapper>
+      */
     )
   }
+}
+
+
+
+export default Game;
 
 
 
