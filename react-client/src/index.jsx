@@ -4,6 +4,10 @@ import Game from './components/game/Game.jsx';
 import styled from 'styled-components';
 
 const AppWrapper = styled.div`
+  display: block;
+  position: absolute;
+  height: 100%;
+  width: 100%;
   font-family: 'Press Start 2P', cursive;
 `;
 class App extends React.Component {

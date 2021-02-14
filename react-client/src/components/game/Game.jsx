@@ -1,14 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
+// import backgroundImage from './gamebackground.jpg';
 
 import ScoreDisplay from './ScoreDisplay.jsx';
 
 const GameWrapper = styled.div`
+  display: block;
   width: 70%;
   height: 90%;
+  color: blue;
   margin: auto;
   border: 1px solid black;
+  background: url('http://localhost:3000/images/gamebackground.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
 `;
 
 class Game extends React.Component {
