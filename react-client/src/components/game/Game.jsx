@@ -5,20 +5,21 @@ import styled from 'styled-components';
 
 import ScoreDisplay from './ScoreDisplay.jsx';
 import Lava from './Lava.jsx';
+import Background from './Background.jsx';
 
 const GameWrapper = styled.div`
   display: block;
   position: absolute;
-  left: 10%;
-  width: 80%;
+  left: 20%;
+  width: 60%;
   height: 90%;
   color: blue;
   margin: auto;
   border: 1px solid black;
-  background: url('http://localhost:3000/images/gamebackground.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  object-fit: contain;
+  /* background-image: url('http://localhost:3000/images/game-background.svg');
+  background-repeat: repeat-y;
+  background-size: cover; */
+
 `;
 
 class Game extends React.Component {
@@ -63,6 +64,7 @@ class Game extends React.Component {
   render () {
     return (
       <GameWrapper>
+        <Background />
         <ScoreDisplay />
         This is the game map
         <Lava />
