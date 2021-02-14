@@ -4,10 +4,13 @@ import styled from 'styled-components';
 // import backgroundImage from './gamebackground.jpg';
 
 import ScoreDisplay from './ScoreDisplay.jsx';
+import Lava from './Lava.jsx';
 
 const GameWrapper = styled.div`
   display: block;
-  width: 70%;
+  position: absolute;
+  left: 10%;
+  width: 80%;
   height: 90%;
   color: blue;
   margin: auto;
@@ -15,6 +18,7 @@ const GameWrapper = styled.div`
   background: url('http://localhost:3000/images/gamebackground.jpg');
   background-repeat: no-repeat;
   background-size: cover;
+  object-fit: contain;
 `;
 
 class Game extends React.Component {
@@ -61,6 +65,7 @@ class Game extends React.Component {
       <GameWrapper>
         <ScoreDisplay />
         This is the game map
+        <Lava />
       </GameWrapper>
       /*
       <GameWrapper>
@@ -69,7 +74,7 @@ class Game extends React.Component {
           <Background currentPlatform={currentPlatform}/>
           <Player platform={platform} cart={cart}/>
         </Map>
-        <Lava
+        <Lava />
       </GameWrapper>
       */
     )
