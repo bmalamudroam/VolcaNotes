@@ -46,20 +46,6 @@ class Game extends React.Component {
     // check if dead
   }
 
-  handleGuessSubmit (event) {
-    event.preventDefault();
-    //check if its right
-     //this could be a method that handles success
-      //if so, update current platform
-      //figure out how to move between platforms
-      //update currentScore
-      //check for win
-        //if win, display endgame modal
-    //if not
-      // increase translationRate
-      // indicate incorrectness
-  }
-
   render () {
     const { currentScore, challengeSet } = this.state;
     return (

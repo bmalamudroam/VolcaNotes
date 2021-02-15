@@ -24,9 +24,9 @@ const QuestionBox = styled.div`
 `;
 
 
-const QuestionForm = ({ challenge, handleAnswer }) => {
+const QuestionForm = ({ challenge, handleGuess }) => {
   return (
-    <form onSubmit={handleAnswer}>
+    <form onSubmit={handleGuess}>
       <label>
         {challenge[0]}
         <input type="text" name="answer"/>
@@ -46,7 +46,7 @@ class Questions extends React.Component {
     this.setState = this.setState.bind(this);
   }
 
-  handleAnswer(event) {
+  handleGuess(event) {
     event.preventDefault();
     let { challengeSet, currentChallengeIndex } = this.state;
     const answer = event.target.answer.value;
@@ -66,7 +66,7 @@ class Questions extends React.Component {
     const { currentTranslation } = this.props;
     return (
       <QuestionBox questionNumber={currentChallengeIndex} translation={currentTranslation}>
-        <QuestionForm challenge={challengeSet[currentChallengeIndex]} handleAnswer={this.handleAnswer.bind(this)}/>
+        <QuestionForm challenge={challengeSet[currentChallengeIndex]} handleGuess={this.handleGuess.bind(this)}/>
       </QuestionBox>
     )
   }

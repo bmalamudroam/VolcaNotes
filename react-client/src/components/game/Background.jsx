@@ -29,16 +29,40 @@ class Background extends React.Component {
     super(props);
     this.state = {
       currentTranslation: 0,
-      translationInterval: 30 /* num ms between 23px translations */,
+      nextLevel: 230,
+      translationInterval: 500 /* num ms between 1px translations */,
     }
     this.setState = this.setState.bind(this);
   }
 
   translateBackground () {
-    const { translationInterval, currentTranslation } = this.state;
-    this.setState({ currentTranslation: currentTranslation + 1 }, () => {
+    const { translationInterval, currentTranslation, nextLevel } = this.state;
+    let newNextLevel = nextLevel;
+    let newTranslationInterval = translationInterval;
+    if (currentTranslation >= nextLevel) {
+      newNextLevel += 230;
+      if (newTranslationInterval > 100) {
+        newTranslationInterval -= 50;
+      }
+    }
+    this.setState({ currentTranslation: currentTranslation + 23, nextLevel: newNextLevel, translationInterval: newTranslationInterval }, () => {
       setTimeout(this.translateBackground.bind(this), translationInterval);
     });
+  }
+
+  handleGuess (event) {
+    event.preventDefault();
+    //check if its right
+
+     //this could be a method that handles success
+      //if so, update current platform
+      //figure out how to move between platforms
+      //update currentScore
+      //check for win
+        //if win, display endgame modal
+    //if not
+      // increase translationRate
+      // indicate incorrectness
   }
 
   componentDidMount () {
