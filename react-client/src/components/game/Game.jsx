@@ -17,7 +17,6 @@ const GameWrapper = styled.div`
   height: 90%;
   color: blue;
   margin: auto;
-  border: 1px solid black;
 `;
 
 

@@ -7,7 +7,6 @@ const ImageBundle = styled.div`
   display: flex;
   flex-direction: column;
   transform: translateY(${({numTiles, currentTranslation}) => currentTranslation - (910 * (Math.floor(numTiles) - 1) + 230) }px);
-  /* 14950920 * floor(numQuestions / 3) + 230*/
 `;
 const BackgroundWrapper = styled.div`
   height: 100%;
@@ -16,12 +15,14 @@ const BackgroundWrapper = styled.div`
 
 const ViewPort = styled.div`
   overflow-y: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
   overflow-x: hidden;
   display: flex;
   position: absolute;
   width: fit-content;
   height: 700px;
-  /* box-sizing: border-box; */
 `;
 
 class Background extends React.Component {
@@ -53,7 +54,11 @@ class Background extends React.Component {
         }
       }
       this.setState({ currentTranslation: currentTranslation + 23, nextLevel: newNextLevel, translationInterval: newTranslationInterval, distanceFromLava: distanceFromLava - 23 }, () => {
-        console.log(this.state.distanceFromLava);
+        if (distanceFromLava <= -23) {
+          //handle game loss
+          console.log('YOU LOSE');
+          return;
+        }
         setTimeout(this.translateBackground.bind(this), translationInterval);
       });
     }
@@ -71,11 +76,7 @@ class Background extends React.Component {
   //     newTranslationInterval -= 10; //change this to speed up/slow down game
   //   }
   //   console.log(newTranslationInterval);
-  //   this.setState({ translationInterval: newTranslationInterval }, console.log(this.state.translationInterval));
-  // }
-
-  // componentDidMount () {
-  //   this.translateBackground();
+  //   this.setState({ "translationInterval": newTranslationInterval }, console.log(this.state.translationInterval));
   // }
 
   render () {

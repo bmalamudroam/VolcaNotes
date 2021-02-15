@@ -29,7 +29,7 @@ const QuestionForm = ({ challenge, handleGuess }) => {
     <form onSubmit={handleGuess}>
       <label>
         {challenge[0]}
-        <input type="text" name="answer"/>
+        <input type="text" name="answer" autocomplete="off"/>
       </label>
       <input type="submit" value="Submit" />
     </form>
@@ -62,12 +62,13 @@ class Questions extends React.Component {
         this.props.updateDistanceFromLava();
       });
     } else {
-      console.log('oops');
       // speedUp();
       //change background color
       //increase translation rate
     }
-    //increase translation rate by 1/.9
+    event.target.reset();
+    event.target.answer.focus();
+    event.target.answer.select();
   }
 
   render() {
