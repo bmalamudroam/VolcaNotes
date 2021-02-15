@@ -5,13 +5,12 @@ import styled from 'styled-components';
 const ImageBundle = styled.div`
   display: flex;
   flex-direction: column;
+  transform: translateY(-14950px);
+  /* 920 * floor(numQuestions / 3) + 230*/
 `;
 const BackgroundWrapper = styled.div`
   height: 100%;
   display: flex;
-  /* flex-direction: column; */
-  /* overflow-y: scroll; */
-  /* object-fit: cover; */
 `;
 
 const ViewPort = styled.div`
