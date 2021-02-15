@@ -6,6 +6,8 @@ import sampleSetMath from '../../sampleSetMath.js';
 import ScoreDisplay from './ScoreDisplay.jsx';
 import Lava from './Lava.jsx';
 import Background from './Background.jsx';
+import Questions from './Questions.jsx';
+
 
 const GameWrapper = styled.div`
   display: block;
@@ -17,22 +19,7 @@ const GameWrapper = styled.div`
   margin: auto;
   border: 1px solid black;
 `;
-const QuestionBox = styled.div`
-  display: block;
-  position: absolute;
-  height: 100px;
-  width: 180px;
-  background-color: white;
-  left: 636px;
-  bottom: 240px;
-  transform:
-    translateX(${({questionNumber}) => (
-      (questionNumber % 2 === 0) ? 0 : -588)}px
-    )
-    translateY(${({questionNumber}) => (
-      ((questionNumber % 2 === 0) ? 0 : -230) - (230 * questionNumber))}px
-    );
-`;
+
 
 class Game extends React.Component {
   constructor(props) {
@@ -80,7 +67,7 @@ class Game extends React.Component {
         <Background challengeSet={challengeSet}/>
         <ScoreDisplay score={currentScore}/>
         <Lava />
-        <QuestionBox questionNumber={2} />
+        <Questions />
       </GameWrapper>
       /*
       <GameWrapper>
