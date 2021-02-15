@@ -41,13 +41,24 @@ class Questions extends React.Component {
     this.state = {
       challengeSet: this.props.challengeSet,
       currentChallengeIndex: 0,
+      background: 'white',
     }
+    this.setState = this.setState.bind(this);
   }
 
   handleAnswer(event) {
     event.preventDefault();
+    let { challengeSet, currentChallengeIndex } = this.state;
     const answer = event.target.answer.value;
-    console.log(answer);
+    if (answer === challengeSet[currentChallengeIndex][1]) {
+      currentChallengeIndex += 1;
+      this.setState({ currentChallengeIndex }, console.log('did it'));
+    } else {
+      console.log('oops');
+      //change background color
+      //increase translation rate
+    }
+
   }
 
   render() {
