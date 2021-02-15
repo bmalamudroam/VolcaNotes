@@ -5,8 +5,8 @@ import styled from 'styled-components';
 const ImageBundle = styled.div`
   display: flex;
   flex-direction: column;
-  transform: translateY(-14950px);
-  /* 920 * floor(numQuestions / 3) + 230*/
+  transform: translateY(-${(props) => (920 * (Math.floor(props.numTiles) - 1) + 230)}px);
+  /* 14950920 * floor(numQuestions / 3) + 230*/
 `;
 const BackgroundWrapper = styled.div`
   height: 100%;
@@ -32,7 +32,7 @@ class Background extends React.Component {
   }
 
   render () {
-    let numQuestions = 50;
+    let numQuestions = this.props.challengeSet.length;
     let backgroundTiles = [];
     for (let i = 0; i < numQuestions / 3; i += 1) {
       backgroundTiles.push(
@@ -42,7 +42,7 @@ class Background extends React.Component {
     return (
       <BackgroundWrapper>
         <ViewPort>
-          <ImageBundle>
+          <ImageBundle numTiles={backgroundTiles.length}>
             {
               backgroundTiles.map(tile => (tile))
             }

@@ -28,7 +28,7 @@ class Game extends React.Component {
     this.state = {
       username: '',
       cart: '',
-      challengeSet: [/* holds tuples [Q, A] */],
+      challengeSet: [1,2,3,4,5,6,76,8,9/* holds tuples [Q, A] */],
       translationRate: 0 /* pixels per 100ms */,
       currentPlatform: 0,
       currentTranslation: 0,
@@ -62,10 +62,10 @@ class Game extends React.Component {
   }
 
   render () {
-    const { currentScore } = this.state;
+    const { currentScore, challengeSet } = this.state;
     return (
       <GameWrapper>
-        <Background />
+        <Background challengeSet={challengeSet}/>
         <ScoreDisplay score={currentScore}/>
         <Lava />
       </GameWrapper>
