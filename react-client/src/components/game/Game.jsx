@@ -28,9 +28,11 @@ class Game extends React.Component {
       cart: '',
       challengeSet: sampleSetMath/* holds tuples [Q, A] */,
       currentScore: 0,
+      gameOver: false,
     }
     this.setState = this.setState.bind(this);
     this.updateScore = this.updateScore.bind(this);
+    this.updateGameOver = this.updateGameOver.bind(this);
   }
 
   updateScore (incrementValue) {
@@ -38,11 +40,16 @@ class Game extends React.Component {
     this.setState({ "currentScore": currentScore + incrementValue });
   }
 
+  updateGameOver () {
+    console.log('GAME OVER');
+    this.setState({ gameOver: true });
+  }
+
   render () {
-    const { currentScore, challengeSet } = this.state;
+    const { currentScore, challengeSet, gameOver } = this.state;
     return (
       <GameWrapper>
-        <Background challengeSet={challengeSet} updateScore={this.updateScore} />
+        <Background challengeSet={challengeSet} updateScore={this.updateScore} gameOver={gameOver} updateGameOver={this.updateGameOver} />
         <ScoreDisplay score={currentScore} />
         <Lava />
         {/* <Questions challengeSet={challengeSet}/> */}

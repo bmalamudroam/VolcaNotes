@@ -39,6 +39,9 @@ class Background extends React.Component {
   }
 
   translateBackground () {
+    if (this.props.gameOver) {
+      return;
+    }
     const { translationInterval, currentTranslation, nextLevel, distanceFromLava } = this.state;
     let newTranslationInterval = translationInterval;
     let newNextLevel = nextLevel;
@@ -80,7 +83,7 @@ class Background extends React.Component {
   // }
 
   render () {
-    const { challengeSet, updateScore } = this.props;
+    const { challengeSet, updateScore, updateGameOver } = this.props;
     const { currentTranslation } = this.state;
     let numQuestions = challengeSet.length;
     let backgroundTiles = [];
@@ -99,6 +102,7 @@ class Background extends React.Component {
           </ImageBundle>
           <Questions
             challengeSet={challengeSet}
+            updateGameOver={updateGameOver}
             updateScore={updateScore}
             currentTranslation={currentTranslation}
             start={this.translateBackground.bind(this)}
