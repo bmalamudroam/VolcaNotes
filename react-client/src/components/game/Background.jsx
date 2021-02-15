@@ -30,44 +30,46 @@ class Background extends React.Component {
     this.state = {
       currentTranslation: 0,
       nextLevel: 230,
-      translationInterval: 500 /* num ms between 1px translations */,
+      translationInterval: 10000 /* num ms between 1px translations */,
     }
     this.setState = this.setState.bind(this);
   }
 
   translateBackground () {
     const { translationInterval, currentTranslation, nextLevel } = this.state;
-    let newNextLevel = nextLevel;
     let newTranslationInterval = translationInterval;
-    if (currentTranslation >= nextLevel) {
-      newNextLevel += 230;
-      if (newTranslationInterval > 100) {
-        newTranslationInterval -= 50;
+    let newNextLevel = nextLevel;
+    if (translationInterval > 500) {
+      debugger;
+      this.setState((state) => ({ "translationInterval": 500 }), () => {
+        setTimeout(this.translateBackground.bind(this), 0);
+      });
+    } else {
+      if (currentTranslation >= nextLevel) {
+        newNextLevel += 230;
+        if (newTranslationInterval > 100) {
+          newTranslationInterval -= 10; //change this to speed up/slow down game
+        }
       }
+      this.setState({ currentTranslation: currentTranslation + 23, nextLevel: newNextLevel, translationInterval: newTranslationInterval }, () => {
+        setTimeout(this.translateBackground.bind(this), translationInterval);
+      });
     }
-    this.setState({ currentTranslation: currentTranslation + 23, nextLevel: newNextLevel, translationInterval: newTranslationInterval }, () => {
-      setTimeout(this.translateBackground.bind(this), translationInterval);
-    });
   }
 
-  handleGuess (event) {
-    event.preventDefault();
-    //check if its right
+  // speedUp () {
+  //   const { translationInterval } = this.state;
+  //   let newTranslationInterval = translationInterval;
+  //   if (newTranslationInterval > 100) {
+  //     newTranslationInterval -= 10; //change this to speed up/slow down game
+  //   }
+  //   console.log(newTranslationInterval);
+  //   this.setState({ translationInterval: newTranslationInterval }, console.log(this.state.translationInterval));
+  // }
 
-     //this could be a method that handles success
-      //if so, update current platform
-      //figure out how to move between platforms
-      //update currentScore
-      //check for win
-        //if win, display endgame modal
-    //if not
-      // increase translationRate
-      // indicate incorrectness
-  }
-
-  componentDidMount () {
-    this.translateBackground();
-  }
+  // componentDidMount () {
+  //   this.translateBackground();
+  // }
 
   render () {
     const { challengeSet } = this.props;
@@ -87,7 +89,7 @@ class Background extends React.Component {
               backgroundTiles.map(tile => (tile))
             }
           </ImageBundle>
-          <Questions challengeSet={challengeSet} currentTranslation={currentTranslation}/>
+          <Questions challengeSet={challengeSet} currentTranslation={currentTranslation} start={this.translateBackground.bind(this)}/>
         </ViewPort>
       </BackgroundWrapper>
     )

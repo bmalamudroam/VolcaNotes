@@ -42,19 +42,26 @@ class Questions extends React.Component {
       challengeSet: this.props.challengeSet,
       currentChallengeIndex: 0,
       background: 'white',
+      started: false,
     }
     this.setState = this.setState.bind(this);
   }
 
   handleGuess(event) {
     event.preventDefault();
+    // const { speedUp } = this.props;
     let { challengeSet, currentChallengeIndex } = this.state;
     const answer = event.target.answer.value;
+    if (!this.state.started) {
+      this.props.start();
+      this.setState({ started: true});
+    }
     if (answer === challengeSet[currentChallengeIndex][1]) {
       currentChallengeIndex += 1;
       this.setState({ currentChallengeIndex }, console.log('did it'));
     } else {
       console.log('oops');
+      // speedUp();
       //change background color
       //increase translation rate
     }
