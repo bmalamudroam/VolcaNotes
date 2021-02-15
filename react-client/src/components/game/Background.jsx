@@ -28,14 +28,22 @@ class Background extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentTranslation: 110,
-      translationRate: 23 /* px per second */,
+      currentTranslation: 0,
+      translationInterval: 30 /* num ms between 23px translations */,
     }
+    this.setState = this.setState.bind(this);
   }
 
-  // translateBackground () {
-  //   const
-  // }
+  translateBackground () {
+    const { translationInterval, currentTranslation } = this.state;
+    this.setState({ currentTranslation: currentTranslation + 1 }, () => {
+      setTimeout(this.translateBackground.bind(this), translationInterval);
+    });
+  }
+
+  componentDidMount () {
+    this.translateBackground();
+  }
 
   render () {
     const { challengeSet } = this.props;
