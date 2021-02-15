@@ -6,7 +6,7 @@ import sampleSetMath from '../../sampleSetMath.js';
 import ScoreDisplay from './ScoreDisplay.jsx';
 import Lava from './Lava.jsx';
 import Background from './Background.jsx';
-import Questions from './Questions.jsx';
+// import Questions from './Questions.jsx';
 
 
 const GameWrapper = styled.div`
@@ -17,7 +17,6 @@ const GameWrapper = styled.div`
   height: 90%;
   color: blue;
   margin: auto;
-  border: 1px solid black;
 `;
 
 
@@ -46,20 +45,6 @@ class Game extends React.Component {
     // check if dead
   }
 
-  handleGuessSubmit (event) {
-    event.preventDefault();
-    //check if its right
-     //this could be a method that handles success
-      //if so, update current platform
-      //figure out how to move between platforms
-      //update currentScore
-      //check for win
-        //if win, display endgame modal
-    //if not
-      // increase translationRate
-      // indicate incorrectness
-  }
-
   render () {
     const { currentScore, challengeSet } = this.state;
     return (
@@ -67,7 +52,7 @@ class Game extends React.Component {
         <Background challengeSet={challengeSet}/>
         <ScoreDisplay score={currentScore}/>
         <Lava />
-        <Questions challengeSet={challengeSet}/>
+        {/* <Questions challengeSet={challengeSet}/> */}
       </GameWrapper>
       /*
       <GameWrapper>
