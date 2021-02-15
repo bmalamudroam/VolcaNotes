@@ -17,8 +17,8 @@ const QuestionBox = styled.div`
     translateX(${({questionNumber}) => (
       (questionNumber % 2 === 0) ? 0 : 578)}px
     )
-    translateY(${({ questionNumber }) => (
-      -(228 * questionNumber))}px
+    translateY(${({ questionNumber, translation }) => (
+      -(228 * questionNumber)) + translation}px
     );
   padding: 10px;
 `;
@@ -58,13 +58,14 @@ class Questions extends React.Component {
       //change background color
       //increase translation rate
     }
-
+    //increase translation rate by 1/.9
   }
 
   render() {
     const { challengeSet, currentChallengeIndex } = this.state;
+    const { currentTranslation } = this.props;
     return (
-      <QuestionBox questionNumber={currentChallengeIndex}>
+      <QuestionBox questionNumber={currentChallengeIndex} translation={currentTranslation}>
         <QuestionForm challenge={challengeSet[currentChallengeIndex]} handleAnswer={this.handleAnswer.bind(this)}/>
       </QuestionBox>
     )
