@@ -62,11 +62,11 @@ class Game extends React.Component {
   }
 
   render () {
+    const { currentScore } = this.state;
     return (
       <GameWrapper>
         <Background />
-        <ScoreDisplay />
-        This is the game map
+        <ScoreDisplay score={currentScore}/>
         <Lava />
       </GameWrapper>
       /*
@@ -82,8 +82,6 @@ class Game extends React.Component {
     )
   }
 }
-
-
 
 export default Game;
 

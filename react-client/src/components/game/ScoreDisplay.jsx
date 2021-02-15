@@ -12,9 +12,9 @@ const ScoreWrapper = styled.div`
   text-align: center;
   font-size: 32px;
 `;
-const ScoreDisplay = (props) => {
+const ScoreDisplay = ({ score }) => {
   return (
-    <ScoreWrapper>1000</ScoreWrapper>
+    <ScoreWrapper>{score}</ScoreWrapper>
   );
 }
 

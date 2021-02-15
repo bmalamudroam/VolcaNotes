@@ -2,31 +2,53 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 
-const BackgroundWrapper = styled.div`
+const ImageBundle = styled.div`
   display: flex;
-  height: 100%;
   flex-direction: column;
-  overflow-y: scroll;
-  object-fit: cover;
+`;
+const BackgroundWrapper = styled.div`
+  height: 100%;
+  display: flex;
+  /* flex-direction: column; */
+  /* overflow-y: scroll; */
+  /* object-fit: cover; */
 `;
 
-// const img = styled.img`
-// `;
+const ViewPort = styled.div`
+  overflow-y: scroll;
+  overflow-x: hidden;
+  display: flex;
+  position: absolute;
+  width: fit-content;
+  height: 700px;
+  /* box-sizing: border-box; */
+`;
 
 class Background extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      currentTranslation: 1000
     }
   }
 
   render () {
+    let numQuestions = 50;
+    let backgroundTiles = [];
+    for (let i = 0; i < numQuestions / 3; i += 1) {
+      backgroundTiles.push(
+        <img src="http://localhost:3000/images/game-background.svg " height="920" />
+      );
+    }
     return (
       <BackgroundWrapper>
-        <img src="http://localhost:3000/images/game-background.svg"/>
-        <img src="http://localhost:3000/images/game-background.svg"/>
-        <img src="http://localhost:3000/images/game-background.svg"/>
-        <img src="http://localhost:3000/images/game-background.svg"/>
+        <ViewPort>
+          <ImageBundle>
+            {
+              backgroundTiles.map(tile => (tile))
+            }
+          </ImageBundle>
+        </ViewPort>
       </BackgroundWrapper>
     )
   }
