@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const ImageBundle = styled.div`
   display: flex;
   flex-direction: column;
-  transform: translateY(-${(props) => (920 * (Math.floor(props.numTiles) - 1) + 230)}px);
+  transform: translateY(-${(props) => (910 * (Math.floor(props.numTiles) - 1) + 230)}px);
   /* 14950920 * floor(numQuestions / 3) + 230*/
 `;
 const BackgroundWrapper = styled.div`
@@ -36,7 +36,7 @@ class Background extends React.Component {
     let backgroundTiles = [];
     for (let i = 0; i < numQuestions / 3; i += 1) {
       backgroundTiles.push(
-        <img src="http://localhost:3000/images/game-background.svg " height="920" />
+        <img src="http://localhost:3000/images/game-background.svg " height="910" />
       );
     }
     return (

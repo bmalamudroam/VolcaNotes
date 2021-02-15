@@ -67,7 +67,7 @@ class Game extends React.Component {
         <Background challengeSet={challengeSet}/>
         <ScoreDisplay score={currentScore}/>
         <Lava />
-        <Questions />
+        <Questions challengeSet={challengeSet}/>
       </GameWrapper>
       /*
       <GameWrapper>
