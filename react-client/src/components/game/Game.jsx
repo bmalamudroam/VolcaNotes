@@ -6,7 +6,7 @@ import sampleSetMath from '../../sampleSetMath.js';
 import ScoreDisplay from './ScoreDisplay.jsx';
 import Lava from './Lava.jsx';
 import Background from './Background.jsx';
-import Questions from './Questions.jsx';
+// import Questions from './Questions.jsx';
 
 
 const GameWrapper = styled.div`
@@ -67,7 +67,7 @@ class Game extends React.Component {
         <Background challengeSet={challengeSet}/>
         <ScoreDisplay score={currentScore}/>
         <Lava />
-        <Questions challengeSet={challengeSet}/>
+        {/* <Questions challengeSet={challengeSet}/> */}
       </GameWrapper>
       /*
       <GameWrapper>

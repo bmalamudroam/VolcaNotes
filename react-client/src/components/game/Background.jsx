@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
+import Questions from './Questions.jsx';
 
 const ImageBundle = styled.div`
   display: flex;
@@ -32,7 +33,8 @@ class Background extends React.Component {
   }
 
   render () {
-    let numQuestions = this.props.challengeSet.length;
+    const { challengeSet } = this.props;
+    let numQuestions = challengeSet.length;
     let backgroundTiles = [];
     for (let i = 0; i < numQuestions / 3; i += 1) {
       backgroundTiles.push(
@@ -47,6 +49,7 @@ class Background extends React.Component {
               backgroundTiles.map(tile => (tile))
             }
           </ImageBundle>
+          <Questions challengeSet={challengeSet}/>
         </ViewPort>
       </BackgroundWrapper>
     )
