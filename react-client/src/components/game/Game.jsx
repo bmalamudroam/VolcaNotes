@@ -27,30 +27,23 @@ class Game extends React.Component {
       username: '',
       cart: '',
       challengeSet: sampleSetMath/* holds tuples [Q, A] */,
-      translationRate: 0 /* pixels per 100ms */,
-      currentPlatform: 0,
-      currentTranslation: 0,
       currentScore: 0,
     }
+    this.setState = this.setState.bind(this);
+    this.updateScore = this.updateScore.bind(this);
   }
 
-  movePlatform (toPlatform) {
-    //do stuff
-  }
-
-  translateMap (translationRate) {
-    // update currentTranslation
-    // maybe set timeout for next translation
-    // maybe adjust translationRate
-    // check if dead
+  updateScore (incrementValue) {
+    const { currentScore } = this.state;
+    this.setState({ "currentScore": currentScore + incrementValue });
   }
 
   render () {
     const { currentScore, challengeSet } = this.state;
     return (
       <GameWrapper>
-        <Background challengeSet={challengeSet}/>
-        <ScoreDisplay score={currentScore}/>
+        <Background challengeSet={challengeSet} updateScore={this.updateScore} />
+        <ScoreDisplay score={currentScore} />
         <Lava />
         {/* <Questions challengeSet={challengeSet}/> */}
       </GameWrapper>

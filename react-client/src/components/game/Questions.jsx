@@ -49,7 +49,7 @@ class Questions extends React.Component {
 
   handleGuess(event) {
     event.preventDefault();
-    // const { speedUp } = this.props;
+    const { updateScore } = this.props;
     let { challengeSet, currentChallengeIndex } = this.state;
     const answer = event.target.answer.value;
     if (!this.state.started) {
@@ -58,6 +58,7 @@ class Questions extends React.Component {
     }
     if (answer === challengeSet[currentChallengeIndex][1]) {
       currentChallengeIndex += 1;
+      updateScore(1000);
       this.setState({ currentChallengeIndex }, () => {
         this.props.updateDistanceFromLava();
       });

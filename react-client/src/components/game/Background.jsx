@@ -80,7 +80,7 @@ class Background extends React.Component {
   // }
 
   render () {
-    const { challengeSet } = this.props;
+    const { challengeSet, updateScore } = this.props;
     const { currentTranslation } = this.state;
     let numQuestions = challengeSet.length;
     let backgroundTiles = [];
@@ -99,6 +99,7 @@ class Background extends React.Component {
           </ImageBundle>
           <Questions
             challengeSet={challengeSet}
+            updateScore={updateScore}
             currentTranslation={currentTranslation}
             start={this.translateBackground.bind(this)}
             updateDistanceFromLava={this.updateDistanceFromLava.bind(this)}
