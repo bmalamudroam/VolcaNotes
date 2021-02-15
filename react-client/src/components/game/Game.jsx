@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 // import backgroundImage from './gamebackground.jpg';
-
+import sampleSetMath from '../../sampleSetMath.js';
 import ScoreDisplay from './ScoreDisplay.jsx';
 import Lava from './Lava.jsx';
 import Background from './Background.jsx';
@@ -28,7 +28,7 @@ class Game extends React.Component {
     this.state = {
       username: '',
       cart: '',
-      challengeSet: [1,2,3,4,5,6,76,8,9/* holds tuples [Q, A] */],
+      challengeSet: sampleSetMath/* holds tuples [Q, A] */,
       translationRate: 0 /* pixels per 100ms */,
       currentPlatform: 0,
       currentTranslation: 0,
