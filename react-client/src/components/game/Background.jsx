@@ -14,11 +14,7 @@ const BackgroundWrapper = styled.div`
 `;
 
 const ViewPort = styled.div`
-  overflow-y: scroll;
-  ::-webkit-scrollbar {
-    display: none;
-  }
-  overflow-x: hidden;
+  overflow: hidden;
   display: flex;
   position: absolute;
   width: fit-content;
@@ -59,8 +55,7 @@ class Background extends React.Component {
       this.setState({ currentTranslation: currentTranslation + 23, nextLevel: newNextLevel, translationInterval: newTranslationInterval, distanceFromLava: distanceFromLava - 23 }, () => {
         if (distanceFromLava <= -23) {
           //handle game loss
-          console.log('YOU LOSE');
-          return;
+          this.props.updateGameOver('lose');
         }
         setTimeout(this.translateBackground.bind(this), translationInterval);
       });

@@ -6,6 +6,7 @@ import sampleSetMath from '../../sampleSetMath.js';
 import ScoreDisplay from './ScoreDisplay.jsx';
 import Lava from './Lava.jsx';
 import Background from './Background.jsx';
+import GameOver from '../endGameModal/GameOver.jsx';
 // import Questions from './Questions.jsx';
 
 
@@ -40,19 +41,23 @@ class Game extends React.Component {
     this.setState({ "currentScore": currentScore + incrementValue });
   }
 
-  updateGameOver () {
+  updateGameOver (result) {
     console.log('GAME OVER');
     this.setState({ gameOver: true });
   }
 
   render () {
     const { currentScore, challengeSet, gameOver } = this.state;
+    let endgame = <GameOver />;
+    if (!gameOver) {
+      endgame = <div />;
+    }
     return (
       <GameWrapper>
         <Background challengeSet={challengeSet} updateScore={this.updateScore} gameOver={gameOver} updateGameOver={this.updateGameOver} />
         <ScoreDisplay score={currentScore} />
         <Lava />
-        {/* <Questions challengeSet={challengeSet}/> */}
+        {endgame}
       </GameWrapper>
       /*
       <GameWrapper>
