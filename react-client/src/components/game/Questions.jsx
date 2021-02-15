@@ -58,7 +58,9 @@ class Questions extends React.Component {
     }
     if (answer === challengeSet[currentChallengeIndex][1]) {
       currentChallengeIndex += 1;
-      this.setState({ currentChallengeIndex }, console.log('did it'));
+      this.setState({ currentChallengeIndex }, () => {
+        this.props.updateDistanceFromLava();
+      });
     } else {
       console.log('oops');
       // speedUp();

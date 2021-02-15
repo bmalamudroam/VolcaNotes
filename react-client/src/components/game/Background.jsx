@@ -31,16 +31,17 @@ class Background extends React.Component {
       currentTranslation: 0,
       nextLevel: 230,
       translationInterval: 10000 /* num ms between 1px translations */,
+      playerLoc: 468 /*240*/,
+      distanceFromLava: 368 /* 140 */
     }
     this.setState = this.setState.bind(this);
   }
 
   translateBackground () {
-    const { translationInterval, currentTranslation, nextLevel } = this.state;
+    const { translationInterval, currentTranslation, nextLevel, distanceFromLava } = this.state;
     let newTranslationInterval = translationInterval;
     let newNextLevel = nextLevel;
     if (translationInterval > 500) {
-      debugger;
       this.setState((state) => ({ "translationInterval": 500 }), () => {
         setTimeout(this.translateBackground.bind(this), 0);
       });
@@ -48,13 +49,19 @@ class Background extends React.Component {
       if (currentTranslation >= nextLevel) {
         newNextLevel += 230;
         if (newTranslationInterval > 100) {
-          newTranslationInterval -= 10; //change this to speed up/slow down game
+          newTranslationInterval *= .9; //change this to speed up/slow down game
         }
       }
-      this.setState({ currentTranslation: currentTranslation + 23, nextLevel: newNextLevel, translationInterval: newTranslationInterval }, () => {
+      this.setState({ currentTranslation: currentTranslation + 23, nextLevel: newNextLevel, translationInterval: newTranslationInterval, distanceFromLava: distanceFromLava - 23 }, () => {
+        console.log(this.state.distanceFromLava);
         setTimeout(this.translateBackground.bind(this), translationInterval);
       });
     }
+  }
+
+  updateDistanceFromLava () {
+    const { distanceFromLava } = this.state;
+    this.setState({ "distanceFromLava": distanceFromLava + 230 });
   }
 
   // speedUp () {
@@ -89,7 +96,12 @@ class Background extends React.Component {
               backgroundTiles.map(tile => (tile))
             }
           </ImageBundle>
-          <Questions challengeSet={challengeSet} currentTranslation={currentTranslation} start={this.translateBackground.bind(this)}/>
+          <Questions
+            challengeSet={challengeSet}
+            currentTranslation={currentTranslation}
+            start={this.translateBackground.bind(this)}
+            updateDistanceFromLava={this.updateDistanceFromLava.bind(this)}
+          />
         </ViewPort>
       </BackgroundWrapper>
     )
