@@ -31,7 +31,7 @@ const QuestionForm = ({ challenge, handleGuess }) => {
   return (
     <form onSubmit={handleGuess}>
       <label>
-        {challenge[0]}
+        {challenge.question}
         <input type="text" name="answer" autocomplete="off"/>
       </label>
       <input type="submit" value="Submit" />
@@ -56,13 +56,13 @@ class Questions extends React.Component {
   handleGuess(event) {
     event.preventDefault();
     const { updateScore, updateGameOver, updateIndex, currentChallengeIndex } = this.props;
-    let { challengeSet } = this.state;
+    let { challengeSet } = this.props;
     const answer = event.target.answer.value;
     if (!this.state.started) {
       this.props.start();
       this.setState({ started: true});
     }
-    if (answer === challengeSet[currentChallengeIndex][1]) {
+    if (answer === challengeSet[currentChallengeIndex].answer) {
       updateIndex();
       updateScore(1000);
       this.props.updateDistanceFromLava();
@@ -81,7 +81,7 @@ class Questions extends React.Component {
   }
 
   render() {
-    const { challengeSet } = this.state;
+    const { challengeSet } = this.props;
     const { currentTranslation, currentChallengeIndex } = this.props;
     return (
       <QuestionBox questionNumber={currentChallengeIndex} translation={currentTranslation}>

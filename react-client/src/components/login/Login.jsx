@@ -45,6 +45,19 @@ const EnterInput = styled.input`
   font-size: 16px;
 `;
 
+const SelectSet = styled.select`
+  height: 40px;
+  width: 208px;
+  background-color: rgb(245, 184, 79);
+  border-radius: 10px;
+  vertical-align: auto;
+  outline: none;
+  color: inherit;
+  font-family: inherit;
+  font-size: 16px;
+  margin-right: 10px;
+`;
+
 // const getCarts = (username) => {
 //   axios.get(`api/carts/${username}`)
 //     .then(({ data }) => {
@@ -61,13 +74,13 @@ const EnterUserName = ({ handleEnter, challengesets }) => {
         Enter username:<br />
         <UsernameInput type="text" name="username" autocomplete="off" />
       </label>
-      <select name="challengeset" id="challengeset">
+      <SelectSet name="challengeset" id="challengeset">
         {
           challengesets.map((challengeSetName) => (
             <option value={challengeSetName}>{challengeSetName}</option>
           ))
         }
-      </select>
+      </SelectSet>
       <EnterInput type="submit" value="Enter" />
     </form>
   )
