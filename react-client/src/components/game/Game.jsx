@@ -49,9 +49,9 @@ class Game extends React.Component {
   render () {
     const { currentScore, challengeSet, gameOver } = this.state;
     let endgame = <GameOver />;
-    if (!gameOver) {
-      endgame = <div />;
-    }
+    // if (!gameOver) {
+    //   endgame = <div />;
+    // }
     return (
       <GameWrapper>
         <Background challengeSet={challengeSet} updateScore={this.updateScore} gameOver={gameOver} updateGameOver={this.updateGameOver} />
