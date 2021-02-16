@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
+import LeaderBoard from './LeaderBoard.jsx';
 
 const GameOverWrapper = styled.div`
   display: flex;
@@ -20,7 +21,7 @@ const GameOverWrapper = styled.div`
 `;
 
 const PlayAgain = styled.button`
-  width: 300px;
+  width: 340px;
   height: 100px;
   font-size: 30px;
   line-height: 40px;
@@ -39,6 +40,7 @@ const GameOver = (props) => {
     <GameOverWrapper>
       GAME OVER
       {/* high scores */}
+      <LeaderBoard />
       <PlayAgain>
         Play Again?!
       </PlayAgain>
