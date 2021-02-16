@@ -38,12 +38,11 @@ const PlayAgain = styled.button`
 const Anchor = styled.a`
   color: blue;
 `;
-const GameOver = ({ handlePlayAgainClick }) => {
+const GameOver = ({ handlePlayAgainClick, leaderboard }) => {
   return (
     <GameOverWrapper>
       GAME OVER
-      {/* high scores */}
-      <LeaderBoard />
+      <LeaderBoard scores={leaderboard}/>
       <PlayAgain onClick={handlePlayAgainClick}>
         <Anchor href="http://localhost:3000/">Play Again?!</Anchor>
         {/* Play Again?! */}

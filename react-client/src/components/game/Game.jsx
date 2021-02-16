@@ -31,7 +31,7 @@ class Game extends React.Component {
       cart: '',
       challengeSet: sampleSetMath/* holds tuples [Q, A] */,
       currentScore: 0,
-      highscores: [],
+      leaderboard: [],
       gameOver: false,
       loggedIn: false,
     }
@@ -63,24 +63,24 @@ class Game extends React.Component {
   }
 
   updateGameOver (result) {
-    console.log('GAME OVER');
     const { currentScore, username } = this.state;
     axios.post('/api/scores', { username, score: currentScore })
       .then(() => {
         axios.get('/api/scores')
           .then(({ data }) => {
-            this.setState({ gameOver: true, highscores: data });
+            console.log(`data: ${data}, GAME!`);
+            this.setState({ gameOver: true, leaderboard: data });
           })
       })
   }
 
   render () {
-    const { currentScore, challengeSet, gameOver, loggedIn } = this.state;
+    const { currentScore, challengeSet, gameOver, loggedIn, leaderboard } = this.state;
     let login = <LoginPage handleEnterUsername={this.handleEnterUsername}/>;
     if (loggedIn) {
       login = <div />;
     }
-    let endgame = <GameOver handlePlayAgainClick={this.handlePlayAgainClick} />;
+    let endgame = <GameOver handlePlayAgainClick={this.handlePlayAgainClick} leaderboard={leaderboard} />;
     if (!gameOver) {
       endgame = <div />;
     }

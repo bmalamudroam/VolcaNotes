@@ -26,7 +26,8 @@ const Title = styled.caption`
   text-align: center;
 `;
 
-const LeaderBoard = (props) => {
+const LeaderBoard = ({ scores }) => {
+  debugger;
   return (
     <LeaderBoardWrapper>
       <table>
@@ -38,14 +39,14 @@ const LeaderBoard = (props) => {
         </tr>
       </thead>
         <tbody>
-          <tr>
-            <td>AAA</td>
-            <td>50000</td>
-          </tr>
-          <tr>
-            <td>BBB</td>
-            <td>44400</td>
-          </tr>
+          {
+            scores.map(userscore => (
+              <tr>
+                <td>{userscore.username}</td>
+                <td>{userscore.score}</td>
+              </tr>
+            ))
+          }
         </tbody>
       </table>
 
