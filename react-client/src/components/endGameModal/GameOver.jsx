@@ -25,7 +25,6 @@ const PlayAgain = styled.button`
   height: 100px;
   font-size: 30px;
   line-height: 40px;
-  color: blue;
   border: none;
   background-color: rgb(245, 184, 79);
   :active {
@@ -35,14 +34,19 @@ const PlayAgain = styled.button`
   font-family: inherit;
   border-radius: 10px;
 `;
-const GameOver = (props) => {
+
+const Anchor = styled.a`
+  color: blue;
+`;
+const GameOver = ({ handlePlayAgainClick }) => {
   return (
     <GameOverWrapper>
       GAME OVER
       {/* high scores */}
       <LeaderBoard />
-      <PlayAgain>
-        Play Again?!
+      <PlayAgain onClick={handlePlayAgainClick}>
+        <Anchor href="http://localhost:3000/">Play Again?!</Anchor>
+        {/* Play Again?! */}
       </PlayAgain>
     </GameOverWrapper>
   )

@@ -34,6 +34,9 @@ class Background extends React.Component {
     this.setState = this.setState.bind(this);
   }
 
+  newGame () {
+    this.setState({ currentTranslation: 0, nextLevel: 230, translationInterval: 10000, playerLoc: 468, distanceFromLava: 368 });
+  }
   translateBackground () {
     if (this.props.gameOver) {
       return;

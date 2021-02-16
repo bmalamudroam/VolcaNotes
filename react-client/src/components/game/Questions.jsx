@@ -44,10 +44,13 @@ class Questions extends React.Component {
     this.state = {
       challengeSet: this.props.challengeSet,
       currentChallengeIndex: 0,
-      background: 'white',
       started: false,
     }
     this.setState = this.setState.bind(this);
+  }
+
+  newGame () {
+    this.setState({ currentChallengeIndex: 0, started: false })
   }
 
   handleGuess(event) {

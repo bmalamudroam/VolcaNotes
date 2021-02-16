@@ -34,6 +34,11 @@ class Game extends React.Component {
     this.setState = this.setState.bind(this);
     this.updateScore = this.updateScore.bind(this);
     this.updateGameOver = this.updateGameOver.bind(this);
+    this.handlePlayAgainClick = this.handlePlayAgainClick.bind(this);
+  }
+
+  handlePlayAgainClick () {
+    this.setState({ currentScore: 0, gameOver: false });
   }
 
   updateScore (incrementValue) {
@@ -47,14 +52,14 @@ class Game extends React.Component {
   }
 
   render () {
-    const { currentScore, challengeSet, gameOver } = this.state;
-    let endgame = <GameOver />;
-    // if (!gameOver) {
-    //   endgame = <div />;
-    // }
+    const { currentScore, challengeSet, gameOver, startOver } = this.state;
+    let endgame = <GameOver handlePlayAgainClick={this.handlePlayAgainClick} />;
+    if (!gameOver) {
+      endgame = <div />;
+    }
     return (
       <GameWrapper>
-        <Background challengeSet={challengeSet} updateScore={this.updateScore} gameOver={gameOver} updateGameOver={this.updateGameOver} />
+        <Background challengeSet={challengeSet} updateScore={this.updateScore} gameOver={gameOver} updateGameOver={this.updateGameOver}/>
         <ScoreDisplay score={currentScore} />
         <Lava />
         {endgame}
