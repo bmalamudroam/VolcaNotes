@@ -80,6 +80,7 @@ const EnterUserName = ({ handleEnter, challengesets }) => {
             <option value={challengeSetName}>{challengeSetName}</option>
           ))
         }
+        <option value="newChallengeSet">Create your own!</option>
       </SelectSet>
       <EnterInput type="submit" value="Enter" />
     </form>

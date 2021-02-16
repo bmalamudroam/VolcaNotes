@@ -9,6 +9,7 @@ const LeaderBoardWrapper = styled.div`
   height: 60%;
   font-size: 15px;
   border-radius: 10px;
+  /* color: maroon; */
   text-align: center;
   box-sizing: border-box;
 `;

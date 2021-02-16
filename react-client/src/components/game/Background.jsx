@@ -116,7 +116,7 @@ class Background extends React.Component {
   // }
 
   render () {
-    const { challengeSet, updateScore, updateGameOver } = this.props;
+    const { challengeSet, updateScore, updateGameOver, muted } = this.props;
     const { currentTranslation, currentChallengeIndex } = this.state;
     let numQuestions = challengeSet.length;
     let backgroundTiles = [];
@@ -134,6 +134,7 @@ class Background extends React.Component {
             }
           </ImageBundle>
           <Questions
+            muted={muted}
             challengeSet={challengeSet}
             updateGameOver={updateGameOver}
             updateScore={updateScore}
