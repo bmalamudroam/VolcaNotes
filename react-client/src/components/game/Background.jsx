@@ -21,6 +21,14 @@ const ViewPort = styled.div`
   height: 700px;
 `;
 
+const LittleDude = styled.img`
+  display: block;
+  position: absolute;
+  height: 170px;
+  top: 254px;
+  left: 669px;
+`;
+
 class Background extends React.Component {
   constructor(props) {
     super(props);
@@ -87,7 +95,7 @@ class Background extends React.Component {
     let backgroundTiles = [];
     for (let i = 0; i < numQuestions / 3; i += 1) {
       backgroundTiles.push(
-        <img src="http://localhost:3000/images/game-background.svg " height="910" />
+        <img src="http://localhost:3000/images/game-background.svg" height="910" />
       );
     }
     return (
@@ -106,6 +114,7 @@ class Background extends React.Component {
             start={this.translateBackground.bind(this)}
             updateDistanceFromLava={this.updateDistanceFromLava.bind(this)}
           />
+          <LittleDude src="http://localhost:3000/images/littledude.svg" />
         </ViewPort>
       </BackgroundWrapper>
     )

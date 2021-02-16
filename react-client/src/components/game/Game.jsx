@@ -89,7 +89,7 @@ class Game extends React.Component {
         <Background challengeSet={challengeSet} updateScore={this.updateScore} gameOver={gameOver} updateGameOver={this.updateGameOver}/>
         <ScoreDisplay score={currentScore} />
         <Lava />
-        {login}
+        {/* {login} */}
         {endgame}
       </GameWrapper>
       /*
