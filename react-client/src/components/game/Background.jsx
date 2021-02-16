@@ -31,6 +31,14 @@ const LittleDude = styled.img`
   left: 669px;
 `;
 
+const Scream = () => {
+  return (
+    <audio id="scream">
+      <source src="/images/scream.wav" type="audio/wav"/>
+    </audio>
+  )
+}
+
 class Background extends React.Component {
   constructor(props) {
     super(props);
@@ -56,6 +64,13 @@ class Background extends React.Component {
     this.setState({ currentTranslation: 0, nextLevel: 230, translationInterval: 10000, playerLoc: 468, distanceFromLava: 368 });
   }
 
+  scream () {
+    const screamNoise = document.getElementById("scream");
+    if (!this.props.muted) {
+      screamNoise.play();
+    }
+  }
+
   translateBackground () {
     if (this.props.gameOver) {
       return;
@@ -77,6 +92,7 @@ class Background extends React.Component {
       this.setState({ currentTranslation: currentTranslation + 23, nextLevel: newNextLevel, translationInterval: newTranslationInterval, distanceFromLava: distanceFromLava - 23 }, () => {
         if (distanceFromLava <= -23) {
           //handle game loss
+          this.scream();
           this.props.updateGameOver('lose');
         }
         setTimeout(this.translateBackground.bind(this), translationInterval);
@@ -134,6 +150,7 @@ class Background extends React.Component {
             updateGameOver={updateGameOver}
           />
         </ViewPort>
+        <Scream />
       </BackgroundWrapper>
     )
   }

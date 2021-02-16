@@ -78,6 +78,7 @@ class Game extends React.Component {
     const { muted } = this.state;
     const music = document.getElementById("gamesong");
     if (muted) {
+      music.volume = 0.2;
       music.play();
     } else {
       music.pause();
@@ -125,7 +126,12 @@ class Game extends React.Component {
     }
     return (
       <GameWrapper>
-        <Background challengeSet={challengeSet} updateScore={this.updateScore} gameOver={gameOver} updateGameOver={this.updateGameOver}/>
+        <Background
+          challengeSet={challengeSet}
+          updateScore={this.updateScore}
+          gameOver={gameOver} updateGameOver={this.updateGameOver}
+          muted={muted}
+        />
         <ScoreDisplay score={currentScore} />
         <Lava />
         {login}
