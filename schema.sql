@@ -30,7 +30,7 @@ CREATE TABLE challenges (
   challengeset VARCHAR(100) NOT NULL,
   question VARCHAR(120) NOT NULL,
   answer VARCHAR(120) NOT NULL,
-  PRIMARY KEY (id),
+  PRIMARY KEY (id)
   -- FOREIGN KEY (challengeset) REFERENCES challengesets(id)
 );
 

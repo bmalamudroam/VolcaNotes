@@ -44,7 +44,7 @@ module.exports = {
   },
 
   getChallengeSets: (req, res) => {
-    const queryString = `SELECT setname FROM challengesets`;
+    const queryString = `SELECT DISTINCT challengeset FROM challenges`;
     connection.query(queryString, (err, result) => {
       if (err) {
         res.send(err);
@@ -55,7 +55,7 @@ module.exports = {
   },
 
   getQuestions: (req, res) => {
-    const { challengeSetName } = req.body;
+    const { challengeSetName } = req.params;
     const queryString = `SELECT question, answer FROM challenges WHERE challengeset = '${challengeSetName}'`;
     connection.query(queryString, (err, result) => {
       if (err) {

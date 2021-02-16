@@ -89,6 +89,7 @@ class Game extends React.Component {
   handleEnterUsername (event) {
     event.preventDefault();
     const username = event.target.username.value;
+    // const challengeset = event.target.challengeset.value;
     axios.post('/api/users', { username });
     this.setState({ username, loggedIn: true });
   }
