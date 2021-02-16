@@ -31,6 +31,7 @@ class Game extends React.Component {
       cart: '',
       challengeSet: sampleSetMath/* holds tuples [Q, A] */,
       currentScore: 0,
+      highscores: [],
       gameOver: false,
       loggedIn: false,
     }
@@ -49,7 +50,7 @@ class Game extends React.Component {
     event.preventDefault();
     const username = event.target.username.value;
     axios.post('/api/users', { username });
-    this.setState({ username, loggedIn: true }, () => {debugger});
+    this.setState({ username, loggedIn: true });
       // .then( this.setState({ username, loggedIn: true }))
       // .catch( (err) => {
       //   console.log('ERROR: ', err);
@@ -63,7 +64,14 @@ class Game extends React.Component {
 
   updateGameOver (result) {
     console.log('GAME OVER');
-    this.setState({ gameOver: true });
+    const { currentScore, username } = this.state;
+    axios.post('/api/scores', { username, score: currentScore })
+      .then(() => {
+        axios.get('/api/scores')
+          .then(({ data }) => {
+            this.setState({ gameOver: true, highscores: data });
+          })
+      })
   }
 
   render () {
