@@ -7,6 +7,8 @@ import ScoreDisplay from './ScoreDisplay.jsx';
 import Lava from './Lava.jsx';
 import Background from './Background.jsx';
 import GameOver from '../endGameModal/GameOver.jsx';
+import LoginPage from '../login/Login.jsx';
+import axios from 'axios';
 // import Questions from './Questions.jsx';
 
 
@@ -30,15 +32,28 @@ class Game extends React.Component {
       challengeSet: sampleSetMath/* holds tuples [Q, A] */,
       currentScore: 0,
       gameOver: false,
+      loggedIn: false,
     }
     this.setState = this.setState.bind(this);
     this.updateScore = this.updateScore.bind(this);
     this.updateGameOver = this.updateGameOver.bind(this);
     this.handlePlayAgainClick = this.handlePlayAgainClick.bind(this);
+    this.handleEnterUsername = this.handleEnterUsername.bind(this);
   }
 
   handlePlayAgainClick () {
     this.setState({ currentScore: 0, gameOver: false });
+  }
+
+  handleEnterUsername (event) {
+    event.preventDefault();
+    const username = event.target.username.value;
+    axios.post('/api/users', { username });
+    this.setState({ username, loggedIn: true }, () => {debugger});
+      // .then( this.setState({ username, loggedIn: true }))
+      // .catch( (err) => {
+      //   console.log('ERROR: ', err);
+      // });
   }
 
   updateScore (incrementValue) {
@@ -52,7 +67,11 @@ class Game extends React.Component {
   }
 
   render () {
-    const { currentScore, challengeSet, gameOver, startOver } = this.state;
+    const { currentScore, challengeSet, gameOver, loggedIn } = this.state;
+    let login = <LoginPage handleEnterUsername={this.handleEnterUsername}/>;
+    if (loggedIn) {
+      login = <div />;
+    }
     let endgame = <GameOver handlePlayAgainClick={this.handlePlayAgainClick} />;
     if (!gameOver) {
       endgame = <div />;
@@ -62,6 +81,7 @@ class Game extends React.Component {
         <Background challengeSet={challengeSet} updateScore={this.updateScore} gameOver={gameOver} updateGameOver={this.updateGameOver}/>
         <ScoreDisplay score={currentScore} />
         <Lava />
+        {login}
         {endgame}
       </GameWrapper>
       /*
