@@ -2,10 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import Questions from './Questions.jsx';
+import Player from './Player.jsx';
 
 const ImageBundle = styled.div`
   display: flex;
   flex-direction: column;
+  transition: none;
   transform: translateY(${({numTiles, currentTranslation}) => currentTranslation - (910 * (Math.floor(numTiles) - 1) + 230) }px);
 `;
 const BackgroundWrapper = styled.div`
@@ -21,6 +23,14 @@ const ViewPort = styled.div`
   height: 700px;
 `;
 
+const LittleDude = styled.img`
+  display: block;
+  position: absolute;
+  height: 170px;
+  top: 254px;
+  left: 669px;
+`;
+
 class Background extends React.Component {
   constructor(props) {
     super(props);
@@ -28,15 +38,24 @@ class Background extends React.Component {
       currentTranslation: 0,
       nextLevel: 230,
       translationInterval: 10000 /* num ms between 1px translations */,
+      currentChallengeIndex: 0,
       playerLoc: 468 /*240*/,
-      distanceFromLava: 368 /* 140 */
+      distanceFromLava: 140 /* 140 */
     }
     this.setState = this.setState.bind(this);
+    this.incrementCurrentChallengeIndex = this.incrementCurrentChallengeIndex.bind(this);
+  }
+
+  incrementCurrentChallengeIndex () {
+    const { currentChallengeIndex } = this.state;
+    this.setState({ currentChallengeIndex: currentChallengeIndex + 1});
+    console.log(currentChallengeIndex);
   }
 
   newGame () {
     this.setState({ currentTranslation: 0, nextLevel: 230, translationInterval: 10000, playerLoc: 468, distanceFromLava: 368 });
   }
+
   translateBackground () {
     if (this.props.gameOver) {
       return;
@@ -82,12 +101,12 @@ class Background extends React.Component {
 
   render () {
     const { challengeSet, updateScore, updateGameOver } = this.props;
-    const { currentTranslation } = this.state;
+    const { currentTranslation, currentChallengeIndex } = this.state;
     let numQuestions = challengeSet.length;
     let backgroundTiles = [];
     for (let i = 0; i < numQuestions / 3; i += 1) {
       backgroundTiles.push(
-        <img src="http://localhost:3000/images/game-background.svg " height="910" />
+        <img src="http://localhost:3000/images/game-background.svg" height="910" />
       );
     }
     return (
@@ -105,6 +124,14 @@ class Background extends React.Component {
             currentTranslation={currentTranslation}
             start={this.translateBackground.bind(this)}
             updateDistanceFromLava={this.updateDistanceFromLava.bind(this)}
+            updateIndex={this.incrementCurrentChallengeIndex}
+            currentChallengeIndex={currentChallengeIndex}
+          />
+          <Player
+            currentChallengeIndex={currentChallengeIndex}
+            currentTranslation={currentTranslation}
+            updateDistanceFromLava={this.updateDistanceFromLava.bind(this)}
+            updateGameOver={updateGameOver}
           />
         </ViewPort>
       </BackgroundWrapper>
