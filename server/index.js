@@ -16,6 +16,9 @@ app.use(cors());
 app.post('/api/scores', models.addScore);
 app.post('/api/users', models.addUser);
 app.get('/api/scores', models.getScores);
+app.get('/api/challengesets', models.getChallengeSets);
+app.get('/api/challenges/:challengeSetName', models.getQuestions);
+app.post('/api/challenges', models.postChallengeSet);
 app.listen(3000, function() {
   console.log('listening on port 3000!');
 });

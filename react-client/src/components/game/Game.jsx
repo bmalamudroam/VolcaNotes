@@ -22,6 +22,32 @@ const GameWrapper = styled.div`
   margin: auto;
 `;
 
+// const MusicPlayer = styled.audio`
+//   position: absolute;
+//   width: 40%;
+//   left: 30%;
+//   bottom: 0;
+// `;
+const Song = () => {
+  return (
+    <audio loop id="gamesong">
+      <source src="/images/gamesong.ogg" type="audio/ogg"/>
+    </audio>
+  )
+}
+
+const PausePlaySong = styled.button`
+  position: absolute;
+  width: auto;
+  font-size: 32px;
+  font-family: inherit;
+  color: blue;
+  outline:none;
+  background-color: transparent;
+  border: none;
+  right: 10px;
+  bottom: 10px;
+`;
 
 class Game extends React.Component {
   constructor(props) {
@@ -29,32 +55,46 @@ class Game extends React.Component {
     this.state = {
       username: '',
       cart: '',
-      challengeSet: sampleSetMath/* holds tuples [Q, A] */,
+      challengeSet: [{question: 'BLAJ', answer: ''}, {question: '', answer: ''},{question: '', answer: ''} ,{question: '', answer: ''}]/* holds tuples [Q, A] */,
       currentScore: 0,
       leaderboard: [],
       gameOver: false,
       loggedIn: false,
+      muted: true,
     }
     this.setState = this.setState.bind(this);
     this.updateScore = this.updateScore.bind(this);
     this.updateGameOver = this.updateGameOver.bind(this);
     this.handlePlayAgainClick = this.handlePlayAgainClick.bind(this);
     this.handleEnterUsername = this.handleEnterUsername.bind(this);
+    this.handleToggleAudio = this.handleToggleAudio.bind(this);
   }
 
   handlePlayAgainClick () {
     this.setState({ currentScore: 0, gameOver: false });
   }
 
+  handleToggleAudio () {
+    const { muted } = this.state;
+    const music = document.getElementById("gamesong");
+    if (muted) {
+      music.volume = 0.2;
+      music.play();
+    } else {
+      music.pause();
+    }
+    this.setState({ muted: !muted });
+  }
+
   handleEnterUsername (event) {
     event.preventDefault();
     const username = event.target.username.value;
+    const challengeset = event.target.challengeset.value;
     axios.post('/api/users', { username });
-    this.setState({ username, loggedIn: true });
-      // .then( this.setState({ username, loggedIn: true }))
-      // .catch( (err) => {
-      //   console.log('ERROR: ', err);
-      // });
+    axios.get(`/api/challenges/${challengeset}`)
+      .then(({ data }) => {
+        this.setState({ username, loggedIn: true, challengeSet: data });
+      });
   }
 
   updateScore (incrementValue) {
@@ -75,7 +115,7 @@ class Game extends React.Component {
   }
 
   render () {
-    const { currentScore, challengeSet, gameOver, loggedIn, leaderboard } = this.state;
+    const { currentScore, challengeSet, gameOver, loggedIn, leaderboard, muted } = this.state;
     let login = <LoginPage handleEnterUsername={this.handleEnterUsername}/>;
     if (loggedIn) {
       login = <div />;
@@ -84,24 +124,25 @@ class Game extends React.Component {
     if (!gameOver) {
       endgame = <div />;
     }
+    let audioText = 'Audio(off)';
+    if (!muted) {
+      audioText = 'Audio(on)';
+    }
     return (
       <GameWrapper>
-        <Background challengeSet={challengeSet} updateScore={this.updateScore} gameOver={gameOver} updateGameOver={this.updateGameOver}/>
+        <Background
+          challengeSet={challengeSet}
+          updateScore={this.updateScore}
+          gameOver={gameOver} updateGameOver={this.updateGameOver}
+          muted={muted}
+        />
         <ScoreDisplay score={currentScore} />
         <Lava />
         {login}
         {endgame}
+        <Song />
+        <PausePlaySong onClick={this.handleToggleAudio}>{audioText}</PausePlaySong>
       </GameWrapper>
-      /*
-      <GameWrapper>
-
-        <Map translation={currentTranslation}>
-          <Background currentPlatform={currentPlatform}/>
-          <Player platform={platform} cart={cart}/>
-        </Map>
-        <Lava />
-      </GameWrapper>
-      */
     )
   }
 }

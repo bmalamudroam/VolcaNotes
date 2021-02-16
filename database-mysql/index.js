@@ -41,5 +41,40 @@ module.exports = {
         res.send(result);
       }
     })
-  }
+  },
+
+  getChallengeSets: (req, res) => {
+    const queryString = `SELECT DISTINCT challengeset FROM challenges`;
+    connection.query(queryString, (err, result) => {
+      if (err) {
+        res.send(err);
+      } else {
+        res.send(result);
+      }
+    })
+  },
+
+  getQuestions: (req, res) => {
+    const { challengeSetName } = req.params;
+    const queryString = `SELECT question, answer FROM challenges WHERE challengeset = '${challengeSetName}'`;
+    connection.query(queryString, (err, result) => {
+      if (err) {
+        res.send(err);
+      } else {
+        res.send(result);
+      }
+    })
+  },
+
+  postChallengeSet: (req, res) => {
+    const { challengeSetName, question, answer } = req.body;
+    const queryString = `INSERT INTO challenges (challengeset, question, answer) VALUES ('${challengeSetName}', '${question}', '${answer}')`;
+    connection.query(queryString, (err, result) => {
+      if (err) {
+        res.send(err);
+      } else {
+        res.send(result);
+      }
+    })
+  },
 };

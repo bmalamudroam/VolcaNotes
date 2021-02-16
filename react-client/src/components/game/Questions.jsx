@@ -2,6 +2,22 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 
+const Woo = () => {
+  return (
+    <audio id="woo">
+      <source src="/images/short-woo.wav" type="audio/wav"/>
+    </audio>
+  )
+}
+
+const Uhoh = () => {
+  return (
+    <audio id="uhoh">
+      <source src="/images/uh-oh.wav" type="audio/wav"/>
+    </audio>
+  )
+}
+
 const QuestionBox = styled.div`
   display: block;
   box-sizing: border-box;
@@ -31,7 +47,7 @@ const QuestionForm = ({ challenge, handleGuess }) => {
   return (
     <form onSubmit={handleGuess}>
       <label>
-        {challenge[0]}
+        {challenge.question}
         <input type="text" name="answer" autocomplete="off"/>
       </label>
       <input type="submit" value="Submit" />
@@ -53,16 +69,31 @@ class Questions extends React.Component {
   //   this.setState({ currentChallengeIndex: 0, started: false })
   // }
 
+  woo () {
+    const wooNoise = document.getElementById("woo");
+    if (!this.props.muted) {
+      wooNoise.play();
+    }
+  }
+
+  uhoh () {
+    const uhohNoise = document.getElementById("uhoh");
+    if (!this.props.muted) {
+      uhohNoise.play();
+    }
+  }
+
   handleGuess(event) {
     event.preventDefault();
     const { updateScore, updateGameOver, updateIndex, currentChallengeIndex } = this.props;
-    let { challengeSet } = this.state;
+    let { challengeSet } = this.props;
     const answer = event.target.answer.value;
     if (!this.state.started) {
       this.props.start();
       this.setState({ started: true});
     }
-    if (answer === challengeSet[currentChallengeIndex][1]) {
+    if (answer === challengeSet[currentChallengeIndex].answer) {
+      this.woo();
       updateIndex();
       updateScore(1000);
       this.props.updateDistanceFromLava();
@@ -71,6 +102,7 @@ class Questions extends React.Component {
         //win game endgame
       }
     } else {
+      // this.uhoh();
       // speedUp();
       //change background color
       //increase translation rate
@@ -81,11 +113,13 @@ class Questions extends React.Component {
   }
 
   render() {
-    const { challengeSet } = this.state;
+    const { challengeSet } = this.props;
     const { currentTranslation, currentChallengeIndex } = this.props;
     return (
       <QuestionBox questionNumber={currentChallengeIndex} translation={currentTranslation}>
         <QuestionForm challenge={challengeSet[currentChallengeIndex]} handleGuess={this.handleGuess.bind(this)}/>
+        <Woo />
+        <Uhoh />
       </QuestionBox>
     )
   }
