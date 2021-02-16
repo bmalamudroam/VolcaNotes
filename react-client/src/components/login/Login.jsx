@@ -54,17 +54,23 @@ const EnterInput = styled.input`
 //       console.log(err);
 //     });
 // }
-const EnterUserName = () => {
+const EnterUserName = ({ handleEnter }) => {
   return (
-    <form>
+    <form onSubmit={handleEnter}>
       <label>
         Enter username:<br />
-        <UsernameInput type="text" name="username" />
+        <UsernameInput type="text" name="username" autocomplete="off" />
       </label>
       <EnterInput type="submit" value="Enter" />
     </form>
   )
 }
+
+// const handleEnter = (event) => {
+//   event.preventDefault();
+//   const username = event.target.username.value;
+//   axios.post('/api/users', { username });
+// }
 class LoginPage extends React.Component {
   constructor(props) {
     super(props);
@@ -82,9 +88,10 @@ class LoginPage extends React.Component {
   }
 
   render () {
+    const { handleEnterUsername } = this.props;
     return (
       <LoginWrapper>
-        <EnterUserName />
+        <EnterUserName handleEnter={handleEnterUsername} />
       </LoginWrapper>
     )
   }

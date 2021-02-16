@@ -8,6 +8,7 @@ import Lava from './Lava.jsx';
 import Background from './Background.jsx';
 import GameOver from '../endGameModal/GameOver.jsx';
 import LoginPage from '../login/Login.jsx';
+import axios from 'axios';
 // import Questions from './Questions.jsx';
 
 
@@ -37,10 +38,22 @@ class Game extends React.Component {
     this.updateScore = this.updateScore.bind(this);
     this.updateGameOver = this.updateGameOver.bind(this);
     this.handlePlayAgainClick = this.handlePlayAgainClick.bind(this);
+    this.handleEnterUsername = this.handleEnterUsername.bind(this);
   }
 
   handlePlayAgainClick () {
     this.setState({ currentScore: 0, gameOver: false });
+  }
+
+  handleEnterUsername (event) {
+    event.preventDefault();
+    const username = event.target.username.value;
+    axios.post('/api/users', { username });
+    this.setState({ username, loggedIn: true }, () => {debugger});
+      // .then( this.setState({ username, loggedIn: true }))
+      // .catch( (err) => {
+      //   console.log('ERROR: ', err);
+      // });
   }
 
   updateScore (incrementValue) {
@@ -55,7 +68,7 @@ class Game extends React.Component {
 
   render () {
     const { currentScore, challengeSet, gameOver, loggedIn } = this.state;
-    let login = <LoginPage />;
+    let login = <LoginPage handleEnterUsername={this.handleEnterUsername}/>;
     if (loggedIn) {
       login = <div />;
     }
