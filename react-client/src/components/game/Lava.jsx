@@ -8,14 +8,14 @@ const LavaImg = styled.img`
   display: block;
   position: absolute;
   width: 100%;
-  bottom: 0;
+  bottom: -10px;
   margin: auto;
   object-fit: stretch;
 `;
 
 const Lava = (props) => {
   return (
-    <LavaImg src="http://localhost:3000/images/lava.gif" height="100"/>
+    <LavaImg src="http://localhost:3000/images/lava.gif" height="110"/>
   );
 }
 

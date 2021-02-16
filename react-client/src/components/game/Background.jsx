@@ -14,11 +14,7 @@ const BackgroundWrapper = styled.div`
 `;
 
 const ViewPort = styled.div`
-  overflow-y: scroll;
-  ::-webkit-scrollbar {
-    display: none;
-  }
-  overflow-x: hidden;
+  overflow: hidden;
   display: flex;
   position: absolute;
   width: fit-content;
@@ -38,7 +34,13 @@ class Background extends React.Component {
     this.setState = this.setState.bind(this);
   }
 
+  newGame () {
+    this.setState({ currentTranslation: 0, nextLevel: 230, translationInterval: 10000, playerLoc: 468, distanceFromLava: 368 });
+  }
   translateBackground () {
+    if (this.props.gameOver) {
+      return;
+    }
     const { translationInterval, currentTranslation, nextLevel, distanceFromLava } = this.state;
     let newTranslationInterval = translationInterval;
     let newNextLevel = nextLevel;
@@ -56,8 +58,7 @@ class Background extends React.Component {
       this.setState({ currentTranslation: currentTranslation + 23, nextLevel: newNextLevel, translationInterval: newTranslationInterval, distanceFromLava: distanceFromLava - 23 }, () => {
         if (distanceFromLava <= -23) {
           //handle game loss
-          console.log('YOU LOSE');
-          return;
+          this.props.updateGameOver('lose');
         }
         setTimeout(this.translateBackground.bind(this), translationInterval);
       });
@@ -80,7 +81,7 @@ class Background extends React.Component {
   // }
 
   render () {
-    const { challengeSet } = this.props;
+    const { challengeSet, updateScore, updateGameOver } = this.props;
     const { currentTranslation } = this.state;
     let numQuestions = challengeSet.length;
     let backgroundTiles = [];
@@ -99,6 +100,8 @@ class Background extends React.Component {
           </ImageBundle>
           <Questions
             challengeSet={challengeSet}
+            updateGameOver={updateGameOver}
+            updateScore={updateScore}
             currentTranslation={currentTranslation}
             start={this.translateBackground.bind(this)}
             updateDistanceFromLava={this.updateDistanceFromLava.bind(this)}

@@ -6,6 +6,7 @@ import sampleSetMath from '../../sampleSetMath.js';
 import ScoreDisplay from './ScoreDisplay.jsx';
 import Lava from './Lava.jsx';
 import Background from './Background.jsx';
+import GameOver from '../endGameModal/GameOver.jsx';
 // import Questions from './Questions.jsx';
 
 
@@ -27,32 +28,41 @@ class Game extends React.Component {
       username: '',
       cart: '',
       challengeSet: sampleSetMath/* holds tuples [Q, A] */,
-      translationRate: 0 /* pixels per 100ms */,
-      currentPlatform: 0,
-      currentTranslation: 0,
       currentScore: 0,
+      gameOver: false,
     }
+    this.setState = this.setState.bind(this);
+    this.updateScore = this.updateScore.bind(this);
+    this.updateGameOver = this.updateGameOver.bind(this);
+    this.handlePlayAgainClick = this.handlePlayAgainClick.bind(this);
   }
 
-  movePlatform (toPlatform) {
-    //do stuff
+  handlePlayAgainClick () {
+    this.setState({ currentScore: 0, gameOver: false });
   }
 
-  translateMap (translationRate) {
-    // update currentTranslation
-    // maybe set timeout for next translation
-    // maybe adjust translationRate
-    // check if dead
+  updateScore (incrementValue) {
+    const { currentScore } = this.state;
+    this.setState({ "currentScore": currentScore + incrementValue });
+  }
+
+  updateGameOver (result) {
+    console.log('GAME OVER');
+    this.setState({ gameOver: true });
   }
 
   render () {
-    const { currentScore, challengeSet } = this.state;
+    const { currentScore, challengeSet, gameOver, startOver } = this.state;
+    let endgame = <GameOver handlePlayAgainClick={this.handlePlayAgainClick} />;
+    if (!gameOver) {
+      endgame = <div />;
+    }
     return (
       <GameWrapper>
-        <Background challengeSet={challengeSet}/>
-        <ScoreDisplay score={currentScore}/>
+        <Background challengeSet={challengeSet} updateScore={this.updateScore} gameOver={gameOver} updateGameOver={this.updateGameOver}/>
+        <ScoreDisplay score={currentScore} />
         <Lava />
-        {/* <Questions challengeSet={challengeSet}/> */}
+        {endgame}
       </GameWrapper>
       /*
       <GameWrapper>

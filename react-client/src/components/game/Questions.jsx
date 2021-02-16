@@ -25,6 +25,9 @@ const QuestionBox = styled.div`
 
 
 const QuestionForm = ({ challenge, handleGuess }) => {
+  if (!challenge) {
+    return <div> WINNER </div>
+  }
   return (
     <form onSubmit={handleGuess}>
       <label>
@@ -41,15 +44,18 @@ class Questions extends React.Component {
     this.state = {
       challengeSet: this.props.challengeSet,
       currentChallengeIndex: 0,
-      background: 'white',
       started: false,
     }
     this.setState = this.setState.bind(this);
   }
 
+  newGame () {
+    this.setState({ currentChallengeIndex: 0, started: false })
+  }
+
   handleGuess(event) {
     event.preventDefault();
-    // const { speedUp } = this.props;
+    const { updateScore, updateGameOver } = this.props;
     let { challengeSet, currentChallengeIndex } = this.state;
     const answer = event.target.answer.value;
     if (!this.state.started) {
@@ -58,8 +64,13 @@ class Questions extends React.Component {
     }
     if (answer === challengeSet[currentChallengeIndex][1]) {
       currentChallengeIndex += 1;
+      updateScore(1000);
       this.setState({ currentChallengeIndex }, () => {
         this.props.updateDistanceFromLava();
+        if (currentChallengeIndex === challengeSet.length) {
+          updateGameOver('wins');
+          //win game endgame
+        }
       });
     } else {
       // speedUp();
