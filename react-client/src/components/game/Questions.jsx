@@ -43,35 +43,33 @@ class Questions extends React.Component {
     super(props);
     this.state = {
       challengeSet: this.props.challengeSet,
-      currentChallengeIndex: 0,
+      // currentChallengeIndex: 0,
       started: false,
     }
     this.setState = this.setState.bind(this);
   }
 
-  newGame () {
-    this.setState({ currentChallengeIndex: 0, started: false })
-  }
+  // newGame () {
+  //   this.setState({ currentChallengeIndex: 0, started: false })
+  // }
 
   handleGuess(event) {
     event.preventDefault();
-    const { updateScore, updateGameOver } = this.props;
-    let { challengeSet, currentChallengeIndex } = this.state;
+    const { updateScore, updateGameOver, updateIndex, currentChallengeIndex } = this.props;
+    let { challengeSet } = this.state;
     const answer = event.target.answer.value;
     if (!this.state.started) {
       this.props.start();
       this.setState({ started: true});
     }
     if (answer === challengeSet[currentChallengeIndex][1]) {
-      currentChallengeIndex += 1;
+      updateIndex();
       updateScore(1000);
-      this.setState({ currentChallengeIndex }, () => {
-        this.props.updateDistanceFromLava();
-        if (currentChallengeIndex === challengeSet.length) {
-          updateGameOver('wins');
-          //win game endgame
-        }
-      });
+      this.props.updateDistanceFromLava();
+      if (currentChallengeIndex === challengeSet.length) {
+        updateGameOver('wins');
+        //win game endgame
+      }
     } else {
       // speedUp();
       //change background color
@@ -83,8 +81,8 @@ class Questions extends React.Component {
   }
 
   render() {
-    const { challengeSet, currentChallengeIndex } = this.state;
-    const { currentTranslation } = this.props;
+    const { challengeSet } = this.state;
+    const { currentTranslation, currentChallengeIndex } = this.props;
     return (
       <QuestionBox questionNumber={currentChallengeIndex} translation={currentTranslation}>
         <QuestionForm challenge={challengeSet[currentChallengeIndex]} handleGuess={this.handleGuess.bind(this)}/>

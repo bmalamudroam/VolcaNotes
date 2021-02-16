@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import Questions from './Questions.jsx';
+import Player from './Player.jsx';
 
 const ImageBundle = styled.div`
   display: flex;
@@ -36,15 +37,24 @@ class Background extends React.Component {
       currentTranslation: 0,
       nextLevel: 230,
       translationInterval: 10000 /* num ms between 1px translations */,
+      currentChallengeIndex: 0,
       playerLoc: 468 /*240*/,
       distanceFromLava: 368 /* 140 */
     }
     this.setState = this.setState.bind(this);
+    this.incrementCurrentChallengeIndex = this.incrementCurrentChallengeIndex.bind(this);
+  }
+
+  incrementCurrentChallengeIndex () {
+    const { currentChallengeIndex } = this.state;
+    this.setState({ currentChallengeIndex: currentChallengeIndex + 1});
+    console.log(currentChallengeIndex);
   }
 
   newGame () {
     this.setState({ currentTranslation: 0, nextLevel: 230, translationInterval: 10000, playerLoc: 468, distanceFromLava: 368 });
   }
+
   translateBackground () {
     if (this.props.gameOver) {
       return;
@@ -90,7 +100,7 @@ class Background extends React.Component {
 
   render () {
     const { challengeSet, updateScore, updateGameOver } = this.props;
-    const { currentTranslation } = this.state;
+    const { currentTranslation, currentChallengeIndex } = this.state;
     let numQuestions = challengeSet.length;
     let backgroundTiles = [];
     for (let i = 0; i < numQuestions / 3; i += 1) {
@@ -113,8 +123,15 @@ class Background extends React.Component {
             currentTranslation={currentTranslation}
             start={this.translateBackground.bind(this)}
             updateDistanceFromLava={this.updateDistanceFromLava.bind(this)}
+            updateIndex={this.incrementCurrentChallengeIndex}
+            currentChallengeIndex={currentChallengeIndex}
           />
-          <LittleDude src="http://localhost:3000/images/littledude.svg" />
+          <Player
+            currentChallengeIndex={currentChallengeIndex}
+            currentTranslation={currentTranslation}
+            updateDistanceFromLava={this.updateDistanceFromLava.bind(this)}
+            updateGameOver={updateGameOver}
+          />
         </ViewPort>
       </BackgroundWrapper>
     )
