@@ -8,6 +8,7 @@ const LittleDude = styled.img`
   height: 170px;
   top: 254px;
   left: 669px;
+  transition: transform 0.7s ease;
   transform:
     translateX(${({questionNumber}) => (
       (questionNumber % 2 === 0) ? 0 : -581)}px
@@ -26,7 +27,6 @@ class Player extends React.Component {
     }
     this.setState = this.setState.bind(this);
   }
-
 
   render () {
     const { currentTranslation, currentChallengeIndex } = this.props;
