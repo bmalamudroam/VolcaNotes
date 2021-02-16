@@ -17,7 +17,7 @@ const LittleDude = styled.img`
       -(228 * questionNumber)) + translation}px
     );
 `;
-
+// ${({ sideTranslation }) => ((sideTranslation === 669 || sideTranslation === 88) ? 0 : 0.7}
 class Player extends React.Component {
   constructor(props) {
     super(props);
@@ -31,7 +31,7 @@ class Player extends React.Component {
   render () {
     const { currentTranslation, currentChallengeIndex } = this.props;
     return (
-      <LittleDude src="http://localhost:3000/images/littledude.svg" questionNumber={currentChallengeIndex} translation={currentTranslation}/>
+      <LittleDude src="http://localhost:3000/images/littledude.svg" questionNumber={currentChallengeIndex} translation={currentTranslation} />
     )
   }
 }

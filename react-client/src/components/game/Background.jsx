@@ -7,6 +7,7 @@ import Player from './Player.jsx';
 const ImageBundle = styled.div`
   display: flex;
   flex-direction: column;
+  transition: none;
   transform: translateY(${({numTiles, currentTranslation}) => currentTranslation - (910 * (Math.floor(numTiles) - 1) + 230) }px);
 `;
 const BackgroundWrapper = styled.div`
@@ -39,7 +40,7 @@ class Background extends React.Component {
       translationInterval: 10000 /* num ms between 1px translations */,
       currentChallengeIndex: 0,
       playerLoc: 468 /*240*/,
-      distanceFromLava: 368 /* 140 */
+      distanceFromLava: 140 /* 140 */
     }
     this.setState = this.setState.bind(this);
     this.incrementCurrentChallengeIndex = this.incrementCurrentChallengeIndex.bind(this);
