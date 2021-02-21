@@ -28,17 +28,16 @@ const Title = styled.caption`
 `;
 
 const LeaderBoard = ({ scores }) => {
-  debugger;
   return (
     <LeaderBoardWrapper>
       <table>
-      <Title>Leaderboard:</Title>
-      <thead>
-        <tr>
-          <TableHeaders>Player</TableHeaders>
-          <TableHeaders>Score</TableHeaders>
-        </tr>
-      </thead>
+        <Title>Leaderboard:</Title>
+        <thead>
+          <tr>
+            <TableHeaders>Player</TableHeaders>
+            <TableHeaders>Score</TableHeaders>
+          </tr>
+        </thead>
         <tbody>
           {
             scores.map(userscore => (

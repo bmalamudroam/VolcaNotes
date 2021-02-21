@@ -8,6 +8,7 @@ import Lava from './Lava.jsx';
 import Background from './Background.jsx';
 import GameOver from '../endGameModal/GameOver.jsx';
 import LoginPage from '../login/Login.jsx';
+import CreateChallengeSetPage from '../login/CreateChallengeSet.jsx';
 import axios from 'axios';
 // import Questions from './Questions.jsx';
 
@@ -60,6 +61,7 @@ class Game extends React.Component {
       leaderboard: [],
       gameOver: false,
       loggedIn: false,
+      showCreateSet: false,
       muted: true,
     }
     this.setState = this.setState.bind(this);
@@ -68,6 +70,7 @@ class Game extends React.Component {
     this.handlePlayAgainClick = this.handlePlayAgainClick.bind(this);
     this.handleEnterUsername = this.handleEnterUsername.bind(this);
     this.handleToggleAudio = this.handleToggleAudio.bind(this);
+    this.handleSubmitChallengeSet = this.handleSubmitChallengeSet.bind(this);
   }
 
   handlePlayAgainClick () {
@@ -86,10 +89,18 @@ class Game extends React.Component {
     this.setState({ muted: !muted });
   }
 
+  handleSubmitChallengeSet (event) {
+    event.preventDefault();
+    this.setState({ showCreateSet: false });
+  }
   handleEnterUsername (event) {
     event.preventDefault();
     const username = event.target.username.value;
     const challengeset = event.target.challengeset.value;
+    if (challengeset === "newChallengeSet") {
+      this.setState({ showCreateSet: true });
+      return;
+    }
     axios.post('/api/users', { username });
     axios.get(`/api/challenges/${challengeset}`)
       .then(({ data }) => {
@@ -115,10 +126,14 @@ class Game extends React.Component {
   }
 
   render () {
-    const { currentScore, challengeSet, gameOver, loggedIn, leaderboard, muted } = this.state;
+    const { currentScore, challengeSet, gameOver, loggedIn, leaderboard, muted, showCreateSet } = this.state;
     let login = <LoginPage handleEnterUsername={this.handleEnterUsername}/>;
     if (loggedIn) {
       login = <div />;
+    }
+    let createChallengeSet = <CreateChallengeSetPage submit={this.handleSubmitChallengeSet}/>;
+    if (!showCreateSet) {
+      createChallengeSet = <div />;
     }
     let endgame = <GameOver handlePlayAgainClick={this.handlePlayAgainClick} leaderboard={leaderboard} />;
     if (!gameOver) {
@@ -140,6 +155,7 @@ class Game extends React.Component {
         <Lava />
         {login}
         {endgame}
+        {createChallengeSet}
         <Song />
         <PausePlaySong onClick={this.handleToggleAudio}>{audioText}</PausePlaySong>
       </GameWrapper>

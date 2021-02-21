@@ -102,7 +102,7 @@ class Questions extends React.Component {
         //win game endgame
       }
     } else {
-      // this.uhoh();
+      this.uhoh();
       // speedUp();
       //change background color
       //increase translation rate
