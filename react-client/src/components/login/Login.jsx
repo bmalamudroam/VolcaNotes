@@ -83,7 +83,7 @@ const EnterUserName = ({ handleEnter, challengeSets }) => {
         <option value="newChallengeSet">Create your own!</option>
       </SelectSet>
       <SelectSet name="difficulty" id="difficulty">
-        <option value="None">No movement</option>
+        {/* <option value="None">No movement</option> */}
         <option value="Easy" selected>Standard</option>
         <option value="Medium">Hard</option>
         <option value="Hard">Crazy</option>

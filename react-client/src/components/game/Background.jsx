@@ -75,6 +75,14 @@ class Background extends React.Component {
     if (this.props.gameOver) {
       return;
     }
+    const { difficulty } = this.props;
+    let speed = 1;
+    if (difficulty === 'Medium') {
+      speed = 0.9;
+    }
+    if (difficulty === 'Hard') {
+      speed = 0.8;
+    }
     const { translationInterval, currentTranslation, nextLevel, distanceFromLava } = this.state;
     let newTranslationInterval = translationInterval;
     let newNextLevel = nextLevel;
@@ -86,7 +94,7 @@ class Background extends React.Component {
       if (currentTranslation >= nextLevel) {
         newNextLevel += 230;
         if (newTranslationInterval > 100) {
-          newTranslationInterval *= .9; //change this to speed up/slow down game
+          newTranslationInterval *= speed; //change this to speed up/slow down game
         }
       }
       this.setState({ currentTranslation: currentTranslation + 23, nextLevel: newNextLevel, translationInterval: newTranslationInterval, distanceFromLava: distanceFromLava - 23 }, () => {

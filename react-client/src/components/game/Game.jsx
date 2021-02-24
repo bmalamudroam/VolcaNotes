@@ -60,7 +60,7 @@ class Game extends React.Component {
       challengeSets: [],
       currentScore: 0,
       leaderboard: [],
-      difficulty: 'None',
+      difficulty: 'Easy',
       gameOver: false,
       winner: false,
       loggedIn: false,
@@ -128,18 +128,19 @@ class Game extends React.Component {
     event.preventDefault();
     const username = event.target.username.value;
     const challengeset = event.target.challengeset.value;
+    const difficulty = event.target.difficulty.value;
     if (challengeset === "newChallengeSet") {
-      this.setState({ showCreateSet: true, username });
+      this.setState({ showCreateSet: true, username, difficulty });
       return;
     }
     axios.post('/api/users', { username });
-    this.updateChallengeSet(challengeset, username);
+    this.updateChallengeSet(challengeset, username, difficulty);
   }
 
-  updateChallengeSet (challengeset, username) {
+  updateChallengeSet (challengeset, username, difficulty) {
     axios.get(`/api/challenges/${challengeset}`)
       .then(({ data }) => {
-        this.setState({ username, loggedIn: true, challengeSet: data });
+        this.setState({ username, difficulty, loggedIn: true, challengeSet: data });
       });
   }
 
@@ -161,7 +162,7 @@ class Game extends React.Component {
   }
 
   render () {
-    const { currentScore, challengeSet, gameOver, loggedIn, leaderboard, muted, showCreateSet, challengeSets, winner } = this.state;
+    const { currentScore, challengeSet, gameOver, loggedIn, leaderboard, muted, showCreateSet, challengeSets, winner, difficulty } = this.state;
     let login = <LoginPage handleEnterUsername={this.handleEnterUsername} challengeSets={challengeSets} />;
     if (loggedIn) {
       login = <div />;
@@ -185,6 +186,7 @@ class Game extends React.Component {
           updateScore={this.updateScore}
           gameOver={gameOver} updateGameOver={this.updateGameOver}
           muted={muted}
+          difficulty={difficulty}
         />
         <ScoreDisplay score={currentScore} />
         <Lava />
