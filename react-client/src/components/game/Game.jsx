@@ -61,6 +61,7 @@ class Game extends React.Component {
       currentScore: 0,
       leaderboard: [],
       gameOver: false,
+      winner: false,
       loggedIn: false,
       showCreateSet: false,
       muted: true,
@@ -146,14 +147,14 @@ class Game extends React.Component {
       .then(() => {
         axios.get('/api/scores')
           .then(({ data }) => {
-            console.log(`data: ${data}, GAME!`);
-            this.setState({ gameOver: true, leaderboard: data });
+            const winner = (result === 'wins') ? true : false;
+            this.setState({ gameOver: true, leaderboard: data, winner });
           })
       })
   }
 
   render () {
-    const { currentScore, challengeSet, gameOver, loggedIn, leaderboard, muted, showCreateSet, challengeSets } = this.state;
+    const { currentScore, challengeSet, gameOver, loggedIn, leaderboard, muted, showCreateSet, challengeSets, winner } = this.state;
     let login = <LoginPage handleEnterUsername={this.handleEnterUsername} challengeSets={challengeSets} />;
     if (loggedIn) {
       login = <div />;
@@ -162,7 +163,7 @@ class Game extends React.Component {
     if (!showCreateSet) {
       createChallengeSet = <div />;
     }
-    let endgame = <GameOver handlePlayAgainClick={this.handlePlayAgainClick} leaderboard={leaderboard} />;
+    let endgame = <GameOver handlePlayAgainClick={this.handlePlayAgainClick} leaderboard={leaderboard} winner={winner} />;
     if (!gameOver) {
       endgame = <div />;
     }

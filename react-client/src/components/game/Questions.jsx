@@ -97,7 +97,7 @@ class Questions extends React.Component {
       updateIndex();
       updateScore(1000);
       this.props.updateDistanceFromLava();
-      if (currentChallengeIndex === challengeSet.length) {
+      if (currentChallengeIndex === challengeSet.length - 1) {
         updateGameOver('wins');
         //win game endgame
       }
