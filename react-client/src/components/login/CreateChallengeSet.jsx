@@ -9,7 +9,21 @@ const CreateChallengeSetPage = ({ submit }) => {
       <Title>
         Challenges:
       </Title>
-      <NewChallenge />
+      <ChallengesWrapper>
+        <NewChallenge />
+        <NewChallengeForm>
+          Q: adasdasdasdasdasd <br />
+          A: asdasasdasdasdasd
+        </NewChallengeForm>
+        <NewChallengeForm>
+          Q: adasdasdasdasdasd <br />
+          A: asdasasdasdasdasd
+        </NewChallengeForm>
+        <NewChallengeForm>
+          Q: adasdasdasdasdasd <br />
+          A: asdasasdasdasdasd
+        </NewChallengeForm>
+      </ChallengesWrapper>
       <button onClick={submit}>
         Submit Set!
       </button>
@@ -53,9 +67,27 @@ const CreateSetWrapper = styled.div`
   line-height: 44px;
 `;
 
-const NewChallengeForm = styled.form`
+const ChallengesWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  /* justify-content: flex-end; */
+  overflow: scroll;
+  ::-webkit-scrollbar {
+    display: none;  /* Safari and Chrome */
+  }
   width: 100%;
-  height: 100px;
+  height: 70%;
+`;
+
+
+const NewChallengeForm = styled.form`
+  display: block;
+  color: black;
+  /* box-sizing: border-box; */
+  font-family: serif;
+  width: 95%;
+  min-height: 100px;
+  margin-top: 10px;
   background-color: rgb(245, 184, 79);
   text-align: start;
   padding-left: 10px;
@@ -65,6 +97,7 @@ const NewChallengeForm = styled.form`
 
 const FormInput = styled.input`
   height: 30px;
+  margin-left: 8px;
   width: 72%;
   border: 1px dotted grey;
   /* font-family: inherit; */
