@@ -67,7 +67,7 @@ const SelectSet = styled.select`
 //       console.log(err);
 //     });
 // }
-const EnterUserName = ({ handleEnter, challengesets }) => {
+const EnterUserName = ({ handleEnter, challengeSets }) => {
   return (
     <form onSubmit={handleEnter}>
       <label>
@@ -76,7 +76,7 @@ const EnterUserName = ({ handleEnter, challengesets }) => {
       </label>
       <SelectSet name="challengeset" id="challengeset">
         {
-          challengesets.map((challengeSetName) => (
+          challengeSets.map((challengeSetName) => (
             <option value={challengeSetName}>{challengeSetName}</option>
           ))
         }
@@ -105,28 +105,16 @@ class LoginPage extends React.Component {
         15000: 'better',
         25000: 'best',
       },
-      challengesets: [],
+      challengeSets: [],
     }
     this.setState = this.setState.bind(this);
   }
 
-  componentDidMount () {
-    axios.get('/api/challengesets')
-      .then(({ data }) => {
-        const challengesets = [];
-        data.forEach(obj => {
-          challengesets.push(obj.challengeset);
-        })
-        this.setState({ challengesets });
-      })
-  }
-
   render () {
-    const { handleEnterUsername } = this.props;
-    const { challengesets } = this.state;
+    const { handleEnterUsername, challengeSets } = this.props;
     return (
       <LoginWrapper>
-        <EnterUserName handleEnter={handleEnterUsername} challengesets={challengesets} />
+        <EnterUserName handleEnter={handleEnterUsername} challengeSets={challengeSets} />
       </LoginWrapper>
     )
   }

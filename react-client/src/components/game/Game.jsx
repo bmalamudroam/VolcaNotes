@@ -57,6 +57,7 @@ class Game extends React.Component {
       username: '',
       cart: '',
       challengeSet: [{question: '', answer: ''}, {question: '', answer: ''},{question: '', answer: ''}, {question: '', answer: ''}]/* holds tuples [Q, A] */,
+      challengeSets: [],
       currentScore: 0,
       leaderboard: [],
       gameOver: false,
@@ -91,10 +92,25 @@ class Game extends React.Component {
 
   handleSubmitChallengeSet (event) {
     event.preventDefault();
-    let setName = event.target.setName.value;
-    // axios.get('/')
+    this.updateChallengeSets();
     this.setState({ showCreateSet: false });
   }
+
+  updateChallengeSets () {
+    axios.get('/api/challengesets')
+      .then(({ data }) => {
+        const challengeSets = [];
+        data.forEach(obj => {
+          challengeSets.push(obj.challengeset);
+        })
+        this.setState({ challengeSets });
+      })
+  }
+
+  componentDidMount () {
+    this.updateChallengeSets();
+  }
+
   handleEnterUsername (event) {
     event.preventDefault();
     const username = event.target.username.value;
@@ -128,8 +144,8 @@ class Game extends React.Component {
   }
 
   render () {
-    const { currentScore, challengeSet, gameOver, loggedIn, leaderboard, muted, showCreateSet } = this.state;
-    let login = <LoginPage handleEnterUsername={this.handleEnterUsername}/>;
+    const { currentScore, challengeSet, gameOver, loggedIn, leaderboard, muted, showCreateSet, challengeSets } = this.state;
+    let login = <LoginPage handleEnterUsername={this.handleEnterUsername} challengeSets={challengeSets} />;
     if (loggedIn) {
       login = <div />;
     }

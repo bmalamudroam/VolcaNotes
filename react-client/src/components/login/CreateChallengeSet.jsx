@@ -18,15 +18,14 @@ class CreateChallengeSetPage extends React.Component {
     event.preventDefault();
     const question = event.target.question.value;
     const answer = event.target.answer.value;
-    let { challenges } = this.state;
+    let { challenges, challengeSetName } = this.state;
     challenges.unshift({ question, answer });
-    // axios.post()
+    axios.post('/api/challenges', { challengeSetName, question, answer })
     this.setState({ challenges });
   }
 
   getSetName (event) {
     event.preventDefault();
-    debugger;
     const challengeSetName = event.target.setName.value;
     this.setState({ challengeSetName });
   }
@@ -38,11 +37,11 @@ class CreateChallengeSetPage extends React.Component {
       return (
         <CreateSetWrapper>
           <NewChallengeForm onSubmit={this.getSetName.bind(this)}>
+            <SubmitButton type="submit" value="Submit" />
             <label>
-              Challenge set name:
-              <input type="text" name="setName" />
+              Set name:
+              <FormInput type="text" name="setName"/>
             </label>
-            <input type="submit" value="Submit" />
           </NewChallengeForm>
         </CreateSetWrapper>
       )
@@ -64,12 +63,12 @@ class CreateChallengeSetPage extends React.Component {
           }
 
         </ChallengesWrapper>
-        <button onClick={submit}>
+        <ExitButton onClick={submit}>
           Submit Set!
-        </button>
-        <button onClick={submit}>
+        </ExitButton>
+        <ExitButton onClick={submit}>
           Back
-        </button>
+        </ExitButton>
       </CreateSetWrapper>
     )
   }
@@ -141,7 +140,7 @@ const NewChallengeForm = styled.form`
 const FormInput = styled.input`
   height: 30px;
   margin-left: 8px;
-  width: 72%;
+  width: 67%;
   border: 1px dotted black;
   /* font-family: inherit; */
   font-size: 16px;
@@ -155,6 +154,7 @@ const SubmitButton = styled.input`
   float: right;
   font-family: inherit;
   color: inherit;
+  font-size: 22px;
   padding: -10px;
   height: 100px;
   width: 16%;
@@ -167,6 +167,21 @@ const SubmitButton = styled.input`
   }
   background-color: inherit;
   border-left: 1px solid black;
+`;
+
+const ExitButton = styled.button`
+  background-color: rgb(245, 184, 79);
+  &:hover {
+    background-color: orange;
+  }
+  font-size: 22px;
+  font-family: serif;
+  color: black;
+  border: none;
+  outline: none;
+  transition: all 0.2s ease;
+  border-radius: 10px;
+  padding: 5px;
 `;
 
 const Title = styled.caption`
