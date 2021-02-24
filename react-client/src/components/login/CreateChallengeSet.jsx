@@ -21,6 +21,9 @@ class CreateChallengeSetPage extends React.Component {
     let { challenges, challengeSetName } = this.state;
     challenges.unshift({ question, answer });
     axios.post('/api/challenges', { challengeSetName, question, answer })
+    event.target.reset();
+    event.target.question.focus();
+    event.target.question.select();
     this.setState({ challenges });
   }
 
@@ -63,10 +66,10 @@ class CreateChallengeSetPage extends React.Component {
           }
 
         </ChallengesWrapper>
-        <ExitButton onClick={submit}>
+        <ExitButton onClick={submit} id="submitNewSet">
           Submit Set!
         </ExitButton>
-        <ExitButton onClick={submit}>
+        <ExitButton onClick={submit} id="backNewSet">
           Back
         </ExitButton>
       </CreateSetWrapper>

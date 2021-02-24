@@ -92,7 +92,9 @@ class Game extends React.Component {
 
   handleSubmitChallengeSet (event) {
     event.preventDefault();
-    this.updateChallengeSets();
+    if (event.target.id === "submitNewSet") {
+      this.updateChallengeSets();
+    }
     this.setState({ showCreateSet: false });
   }
 
