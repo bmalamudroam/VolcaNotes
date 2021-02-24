@@ -92,8 +92,11 @@ class Game extends React.Component {
 
   handleSubmitChallengeSet (event) {
     event.preventDefault();
-    if (event.target.id === "submitNewSet") {
+    if (event.target.id !== "backNewSet") {
       this.updateChallengeSets();
+      let { username } = this.state;
+      let challengeset = event.target.id;
+      this.updateChallengeSet(challengeset, username);
     }
     this.setState({ showCreateSet: false });
   }
@@ -118,10 +121,14 @@ class Game extends React.Component {
     const username = event.target.username.value;
     const challengeset = event.target.challengeset.value;
     if (challengeset === "newChallengeSet") {
-      this.setState({ showCreateSet: true });
+      this.setState({ showCreateSet: true, username });
       return;
     }
     axios.post('/api/users', { username });
+    this.updateChallengeSet(challengeset, username);
+  }
+
+  updateChallengeSet (challengeset, username) {
     axios.get(`/api/challenges/${challengeset}`)
       .then(({ data }) => {
         this.setState({ username, loggedIn: true, challengeSet: data });

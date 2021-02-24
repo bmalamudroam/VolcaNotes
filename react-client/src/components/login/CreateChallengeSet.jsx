@@ -66,7 +66,7 @@ class CreateChallengeSetPage extends React.Component {
           }
 
         </ChallengesWrapper>
-        <ExitButton onClick={submit} id="submitNewSet">
+        <ExitButton onClick={submit} id={challengeSetName}>
           Submit Set!
         </ExitButton>
         <ExitButton onClick={submit} id="backNewSet">
