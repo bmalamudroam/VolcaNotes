@@ -56,7 +56,7 @@ class Game extends React.Component {
     this.state = {
       username: '',
       cart: '',
-      challengeSet: [{question: 'BLAJ', answer: ''}, {question: '', answer: ''},{question: '', answer: ''} ,{question: '', answer: ''}]/* holds tuples [Q, A] */,
+      challengeSet: [{question: '', answer: ''}, {question: '', answer: ''},{question: '', answer: ''}, {question: '', answer: ''}]/* holds tuples [Q, A] */,
       currentScore: 0,
       leaderboard: [],
       gameOver: false,
@@ -91,6 +91,8 @@ class Game extends React.Component {
 
   handleSubmitChallengeSet (event) {
     event.preventDefault();
+    let setName = event.target.setName.value;
+    // axios.get('/')
     this.setState({ showCreateSet: false });
   }
   handleEnterUsername (event) {

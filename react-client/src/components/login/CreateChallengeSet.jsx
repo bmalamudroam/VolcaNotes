@@ -8,6 +8,7 @@ class CreateChallengeSetPage extends React.Component {
     super(props);
     this.state = {
       challenges: [],
+      challengeSetName: '',
     };
     this.setState = this.setState.bind(this);
     this.handleAddChallenge = this.handleAddChallenge.bind(this);
@@ -19,16 +20,37 @@ class CreateChallengeSetPage extends React.Component {
     const answer = event.target.answer.value;
     let { challenges } = this.state;
     challenges.unshift({ question, answer });
+    // axios.post()
     this.setState({ challenges });
+  }
+
+  getSetName (event) {
+    event.preventDefault();
+    debugger;
+    const challengeSetName = event.target.setName.value;
+    this.setState({ challengeSetName });
   }
 
   render () {
     const { submit } = this.props;
-    const { challenges } = this.state;
+    const { challenges, challengeSetName } = this.state;
+    if (challengeSetName === '') {
+      return (
+        <CreateSetWrapper>
+          <NewChallengeForm onSubmit={this.getSetName.bind(this)}>
+            <label>
+              Challenge set name:
+              <input type="text" name="setName" />
+            </label>
+            <input type="submit" value="Submit" />
+          </NewChallengeForm>
+        </CreateSetWrapper>
+      )
+    }
     return (
       <CreateSetWrapper>
         <Title>
-          Challenges:
+          {challengeSetName}:
         </Title>
         <ChallengesWrapper>
           <NewChallenge handleAddChallenge={this.handleAddChallenge} />
@@ -44,6 +66,9 @@ class CreateChallengeSetPage extends React.Component {
         </ChallengesWrapper>
         <button onClick={submit}>
           Submit Set!
+        </button>
+        <button onClick={submit}>
+          Back
         </button>
       </CreateSetWrapper>
     )
