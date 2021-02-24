@@ -9,7 +9,19 @@ class CreateChallengeSetPage extends React.Component {
     this.state = {
       challenges: [],
     };
+    this.setState = this.setState.bind(this);
+    this.handleAddChallenge = this.handleAddChallenge.bind(this);
   }
+
+  handleAddChallenge (event) {
+    event.preventDefault();
+    const question = event.target.question.value;
+    const answer = event.target.answer.value;
+    let { challenges } = this.state;
+    challenges.unshift({ question, answer });
+    this.setState({ challenges });
+  }
+
   render () {
     const { submit } = this.props;
     const { challenges } = this.state;
@@ -19,7 +31,7 @@ class CreateChallengeSetPage extends React.Component {
           Challenges:
         </Title>
         <ChallengesWrapper>
-          <NewChallenge />
+          <NewChallenge handleAddChallenge={this.handleAddChallenge} />
           {
             challenges.map(({ question, answer }) => (
               <NewChallengeForm>
@@ -38,18 +50,18 @@ class CreateChallengeSetPage extends React.Component {
   }
 }
 
-const NewChallenge = (props) => {
+const NewChallenge = ({ handleAddChallenge }) => {
   return (
-    <NewChallengeForm>
+    <NewChallengeForm onSubmit={handleAddChallenge}>
       <SubmitButton type="submit" value="Add" />
       <label>
         Q:
-        <FormInput type="text" name="name" />
+        <FormInput type="text" name="question" />
       </label>
       <br />
       <label>
         A:
-        <FormInput type="text" name="name" />
+        <FormInput type="text" name="answer" />
       </label>
     </NewChallengeForm>
   );
@@ -90,7 +102,6 @@ const ChallengesWrapper = styled.div`
 const NewChallengeForm = styled.form`
   display: block;
   color: black;
-  /* box-sizing: border-box; */
   font-family: serif;
   width: 95%;
   min-height: 100px;
