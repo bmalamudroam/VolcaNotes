@@ -78,10 +78,10 @@ class Background extends React.Component {
     const { difficulty } = this.props;
     let speed = 1;
     if (difficulty === 'Medium') {
-      speed = 0.9;
+      speed = 0.92;
     }
     if (difficulty === 'Hard') {
-      speed = 0.8;
+      speed = 0.85;
     }
     const { translationInterval, currentTranslation, nextLevel, distanceFromLava } = this.state;
     let newTranslationInterval = translationInterval;

@@ -17,7 +17,7 @@ const LoginWrapper = styled.div`
   background-color: #000000;
   text-align: center;
   align-items: center;
-  font-size: 40px;
+  font-size: 28px;
   border-radius: 20px;
   line-height: 44px;
 `;
@@ -74,6 +74,7 @@ const EnterUserName = ({ handleEnter, challengeSets }) => {
         Enter username:<br />
         <UsernameInput type="text" name="username" autocomplete="off" />
       </label>
+      Challenge Set
       <SelectSet name="challengeset" id="challengeset">
         {
           challengeSets.map((challengeSetName) => (
@@ -82,6 +83,7 @@ const EnterUserName = ({ handleEnter, challengeSets }) => {
         }
         <option value="newChallengeSet">Create your own!</option>
       </SelectSet>
+      Difficulty
       <SelectSet name="difficulty" id="difficulty">
         {/* <option value="None">No movement</option> */}
         <option value="Easy" selected>Standard</option>

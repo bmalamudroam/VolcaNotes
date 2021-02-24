@@ -46,6 +46,9 @@ class CreateChallengeSetPage extends React.Component {
               <FormInput type="text" name="setName"/>
             </label>
           </NewChallengeForm>
+          <ExitButton onClick={submit} id="backNewSet">
+            Back
+          </ExitButton>
         </CreateSetWrapper>
       )
     }
