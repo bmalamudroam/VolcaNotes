@@ -60,6 +60,7 @@ class Game extends React.Component {
       challengeSets: [],
       currentScore: 0,
       leaderboard: [],
+      difficulty: 'None',
       gameOver: false,
       winner: false,
       loggedIn: false,
@@ -73,10 +74,16 @@ class Game extends React.Component {
     this.handleEnterUsername = this.handleEnterUsername.bind(this);
     this.handleToggleAudio = this.handleToggleAudio.bind(this);
     this.handleSubmitChallengeSet = this.handleSubmitChallengeSet.bind(this);
+    this.setDifficulty = this.setDifficulty.bind(this);
   }
 
   handlePlayAgainClick () {
     this.setState({ currentScore: 0, gameOver: false });
+  }
+
+  setDifficulty (event) {
+    const difficulty = '';
+    this.setState({ difficulty });
   }
 
   handleToggleAudio () {

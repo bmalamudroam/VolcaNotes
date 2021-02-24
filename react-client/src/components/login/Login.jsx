@@ -47,7 +47,7 @@ const EnterInput = styled.input`
 
 const SelectSet = styled.select`
   height: 40px;
-  width: 208px;
+  width: 300px;
   background-color: rgb(245, 184, 79);
   border-radius: 10px;
   vertical-align: auto;
@@ -69,7 +69,7 @@ const SelectSet = styled.select`
 // }
 const EnterUserName = ({ handleEnter, challengeSets }) => {
   return (
-    <form onSubmit={handleEnter}>
+    <FormWrapper onSubmit={handleEnter}>
       <label>
         Enter username:<br />
         <UsernameInput type="text" name="username" autocomplete="off" />
@@ -82,8 +82,14 @@ const EnterUserName = ({ handleEnter, challengeSets }) => {
         }
         <option value="newChallengeSet">Create your own!</option>
       </SelectSet>
+      <SelectSet name="difficulty" id="difficulty">
+        <option value="None">No movement</option>
+        <option value="Easy" selected>Standard</option>
+        <option value="Medium">Hard</option>
+        <option value="Hard">Crazy</option>
+      </SelectSet>
       <EnterInput type="submit" value="Enter" />
-    </form>
+    </FormWrapper>
   )
 }
 
@@ -119,5 +125,13 @@ class LoginPage extends React.Component {
     )
   }
 }
+
+const FormWrapper = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 80%;
+`;
 
 export default LoginPage;
