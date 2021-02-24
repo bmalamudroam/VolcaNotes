@@ -3,32 +3,39 @@ import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 
-const CreateChallengeSetPage = ({ submit }) => {
-  return (
-    <CreateSetWrapper>
-      <Title>
-        Challenges:
-      </Title>
-      <ChallengesWrapper>
-        <NewChallenge />
-        <NewChallengeForm>
-          Q: adasdasdasdasdasd <br />
-          A: asdasasdasdasdasd
-        </NewChallengeForm>
-        <NewChallengeForm>
-          Q: adasdasdasdasdasd <br />
-          A: asdasasdasdasdasd
-        </NewChallengeForm>
-        <NewChallengeForm>
-          Q: adasdasdasdasdasd <br />
-          A: asdasasdasdasdasd
-        </NewChallengeForm>
-      </ChallengesWrapper>
-      <button onClick={submit}>
-        Submit Set!
-      </button>
-    </CreateSetWrapper>
-  )
+class CreateChallengeSetPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      challenges: [],
+    };
+  }
+  render () {
+    const { submit } = this.props;
+    const { challenges } = this.state;
+    return (
+      <CreateSetWrapper>
+        <Title>
+          Challenges:
+        </Title>
+        <ChallengesWrapper>
+          <NewChallenge />
+          {
+            challenges.map(({ question, answer }) => (
+              <NewChallengeForm>
+                Q: {question} <br />
+                A: {answer}
+              </NewChallengeForm>
+            ))
+          }
+
+        </ChallengesWrapper>
+        <button onClick={submit}>
+          Submit Set!
+        </button>
+      </CreateSetWrapper>
+    )
+  }
 }
 
 const NewChallenge = (props) => {
@@ -99,7 +106,7 @@ const FormInput = styled.input`
   height: 30px;
   margin-left: 8px;
   width: 72%;
-  border: 1px dotted grey;
+  border: 1px dotted black;
   /* font-family: inherit; */
   font-size: 16px;
   color: inherit;
@@ -123,7 +130,7 @@ const SubmitButton = styled.input`
     background-color: orange;
   }
   background-color: inherit;
-  border-left: 1px solid grey;
+  border-left: 1px solid black;
 `;
 
 const Title = styled.caption`
