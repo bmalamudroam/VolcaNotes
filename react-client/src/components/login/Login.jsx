@@ -17,7 +17,7 @@ const LoginWrapper = styled.div`
   background-color: #000000;
   text-align: center;
   align-items: center;
-  font-size: 40px;
+  font-size: 28px;
   border-radius: 20px;
   line-height: 44px;
 `;
@@ -47,7 +47,7 @@ const EnterInput = styled.input`
 
 const SelectSet = styled.select`
   height: 40px;
-  width: 208px;
+  width: 300px;
   background-color: rgb(245, 184, 79);
   border-radius: 10px;
   vertical-align: auto;
@@ -67,23 +67,31 @@ const SelectSet = styled.select`
 //       console.log(err);
 //     });
 // }
-const EnterUserName = ({ handleEnter, challengesets }) => {
+const EnterUserName = ({ handleEnter, challengeSets }) => {
   return (
-    <form onSubmit={handleEnter}>
+    <FormWrapper onSubmit={handleEnter}>
       <label>
         Enter username:<br />
         <UsernameInput type="text" name="username" autocomplete="off" />
       </label>
+      Challenge Set
       <SelectSet name="challengeset" id="challengeset">
         {
-          challengesets.map((challengeSetName) => (
+          challengeSets.map((challengeSetName) => (
             <option value={challengeSetName}>{challengeSetName}</option>
           ))
         }
         <option value="newChallengeSet">Create your own!</option>
       </SelectSet>
+      Difficulty
+      <SelectSet name="difficulty" id="difficulty">
+        {/* <option value="None">No movement</option> */}
+        <option value="Easy" selected>Standard</option>
+        <option value="Medium">Hard</option>
+        <option value="Hard">Crazy</option>
+      </SelectSet>
       <EnterInput type="submit" value="Enter" />
-    </form>
+    </FormWrapper>
   )
 }
 
@@ -105,31 +113,27 @@ class LoginPage extends React.Component {
         15000: 'better',
         25000: 'best',
       },
-      challengesets: [],
+      challengeSets: [],
     }
     this.setState = this.setState.bind(this);
   }
 
-  componentDidMount () {
-    axios.get('/api/challengesets')
-      .then(({ data }) => {
-        const challengesets = [];
-        data.forEach(obj => {
-          challengesets.push(obj.challengeset);
-        })
-        this.setState({ challengesets });
-      })
-  }
-
   render () {
-    const { handleEnterUsername } = this.props;
-    const { challengesets } = this.state;
+    const { handleEnterUsername, challengeSets } = this.props;
     return (
       <LoginWrapper>
-        <EnterUserName handleEnter={handleEnterUsername} challengesets={challengesets} />
+        <EnterUserName handleEnter={handleEnterUsername} challengeSets={challengeSets} />
       </LoginWrapper>
     )
   }
 }
+
+const FormWrapper = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 80%;
+`;
 
 export default LoginPage;

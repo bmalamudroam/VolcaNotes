@@ -8,6 +8,7 @@ import Lava from './Lava.jsx';
 import Background from './Background.jsx';
 import GameOver from '../endGameModal/GameOver.jsx';
 import LoginPage from '../login/Login.jsx';
+import CreateChallengeSetPage from '../login/CreateChallengeSet.jsx';
 import axios from 'axios';
 // import Questions from './Questions.jsx';
 
@@ -55,11 +56,15 @@ class Game extends React.Component {
     this.state = {
       username: '',
       cart: '',
-      challengeSet: [{question: 'BLAJ', answer: ''}, {question: '', answer: ''},{question: '', answer: ''} ,{question: '', answer: ''}]/* holds tuples [Q, A] */,
+      challengeSet: [{question: '', answer: ''}, {question: '', answer: ''},{question: '', answer: ''}, {question: '', answer: ''}]/* holds tuples [Q, A] */,
+      challengeSets: [],
       currentScore: 0,
       leaderboard: [],
+      difficulty: 'Easy',
       gameOver: false,
+      winner: false,
       loggedIn: false,
+      showCreateSet: false,
       muted: true,
     }
     this.setState = this.setState.bind(this);
@@ -68,10 +73,17 @@ class Game extends React.Component {
     this.handlePlayAgainClick = this.handlePlayAgainClick.bind(this);
     this.handleEnterUsername = this.handleEnterUsername.bind(this);
     this.handleToggleAudio = this.handleToggleAudio.bind(this);
+    this.handleSubmitChallengeSet = this.handleSubmitChallengeSet.bind(this);
+    this.setDifficulty = this.setDifficulty.bind(this);
   }
 
   handlePlayAgainClick () {
     this.setState({ currentScore: 0, gameOver: false });
+  }
+
+  setDifficulty (event) {
+    const difficulty = '';
+    this.setState({ difficulty });
   }
 
   handleToggleAudio () {
@@ -86,14 +98,49 @@ class Game extends React.Component {
     this.setState({ muted: !muted });
   }
 
+  handleSubmitChallengeSet (event) {
+    event.preventDefault();
+    if (event.target.id !== "backNewSet") {
+      this.updateChallengeSets();
+      let { username } = this.state;
+      let challengeset = event.target.id;
+      this.updateChallengeSet(challengeset, username);
+    }
+    this.setState({ showCreateSet: false });
+  }
+
+  updateChallengeSets () {
+    axios.get('/api/challengesets')
+      .then(({ data }) => {
+        const challengeSets = [];
+        data.forEach(obj => {
+          challengeSets.push(obj.challengeset);
+        })
+        this.setState({ challengeSets });
+      })
+  }
+
+  componentDidMount () {
+    this.updateChallengeSets();
+  }
+
   handleEnterUsername (event) {
     event.preventDefault();
     const username = event.target.username.value;
     const challengeset = event.target.challengeset.value;
+    const difficulty = event.target.difficulty.value;
+    if (challengeset === "newChallengeSet") {
+      this.setState({ showCreateSet: true, username, difficulty });
+      return;
+    }
     axios.post('/api/users', { username });
+    this.updateChallengeSet(challengeset, username, difficulty);
+  }
+
+  updateChallengeSet (challengeset, username, difficulty) {
     axios.get(`/api/challenges/${challengeset}`)
       .then(({ data }) => {
-        this.setState({ username, loggedIn: true, challengeSet: data });
+        this.setState({ username, difficulty, loggedIn: true, challengeSet: data });
       });
   }
 
@@ -108,19 +155,23 @@ class Game extends React.Component {
       .then(() => {
         axios.get('/api/scores')
           .then(({ data }) => {
-            console.log(`data: ${data}, GAME!`);
-            this.setState({ gameOver: true, leaderboard: data });
+            const winner = (result === 'wins') ? true : false;
+            this.setState({ gameOver: true, leaderboard: data, winner });
           })
       })
   }
 
   render () {
-    const { currentScore, challengeSet, gameOver, loggedIn, leaderboard, muted } = this.state;
-    let login = <LoginPage handleEnterUsername={this.handleEnterUsername}/>;
+    const { currentScore, challengeSet, gameOver, loggedIn, leaderboard, muted, showCreateSet, challengeSets, winner, difficulty } = this.state;
+    let login = <LoginPage handleEnterUsername={this.handleEnterUsername} challengeSets={challengeSets} />;
     if (loggedIn) {
       login = <div />;
     }
-    let endgame = <GameOver handlePlayAgainClick={this.handlePlayAgainClick} leaderboard={leaderboard} />;
+    let createChallengeSet = <CreateChallengeSetPage submit={this.handleSubmitChallengeSet}/>;
+    if (!showCreateSet) {
+      createChallengeSet = <div />;
+    }
+    let endgame = <GameOver handlePlayAgainClick={this.handlePlayAgainClick} leaderboard={leaderboard} winner={winner} />;
     if (!gameOver) {
       endgame = <div />;
     }
@@ -135,11 +186,13 @@ class Game extends React.Component {
           updateScore={this.updateScore}
           gameOver={gameOver} updateGameOver={this.updateGameOver}
           muted={muted}
+          difficulty={difficulty}
         />
         <ScoreDisplay score={currentScore} />
         <Lava />
         {login}
         {endgame}
+        {createChallengeSet}
         <Song />
         <PausePlaySong onClick={this.handleToggleAudio}>{audioText}</PausePlaySong>
       </GameWrapper>

@@ -83,7 +83,7 @@ class Questions extends React.Component {
     }
   }
 
-  handleGuess(event) {
+  async handleGuess(event) {
     event.preventDefault();
     const { updateScore, updateGameOver, updateIndex, currentChallengeIndex } = this.props;
     let { challengeSet } = this.props;
@@ -94,15 +94,15 @@ class Questions extends React.Component {
     }
     if (answer === challengeSet[currentChallengeIndex].answer) {
       this.woo();
+      await updateScore(1000);
       updateIndex();
-      updateScore(1000);
       this.props.updateDistanceFromLava();
-      if (currentChallengeIndex === challengeSet.length) {
+      if (currentChallengeIndex === challengeSet.length - 1) {
         updateGameOver('wins');
         //win game endgame
       }
     } else {
-      // this.uhoh();
+      this.uhoh();
       // speedUp();
       //change background color
       //increase translation rate
