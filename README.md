@@ -1,3 +1,4 @@
 # volcaNotes
 
-![](volcanotesdemo.gif)
+![](volcanotescreate.gif)
+![](volcanotescreate.gif)
