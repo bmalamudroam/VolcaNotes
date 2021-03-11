@@ -13,12 +13,10 @@
 <a name="product-details"/>
 Gamified flashcard app. 
 
-- Escape the volcano by solving problems:
-<br>
+- Escape the volcano by solving problems:  
 ![](volcanotesgameplay.gif)
 
-- Create your own problem set: 
-<br>
+- Create your own problem set:  
 ![](volcanotescreate.gif)
 
 ## Usage
