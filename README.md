@@ -14,9 +14,11 @@
 Gamified flashcard app. 
 
 - Escape the volcano by solving problems:
+<br>
 ![](volcanotesgameplay.gif)
 
 - Create your own problem set: 
+<br>
 ![](volcanotescreate.gif)
 
 ## Usage
