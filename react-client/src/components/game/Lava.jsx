@@ -11,6 +11,7 @@ const LavaImg = styled.img`
   bottom: -10px;
   margin: auto;
   object-fit: stretch;
+  max-width: 854px;
 `;
 
 const Lava = (props) => {
